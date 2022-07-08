@@ -7,6 +7,8 @@ from rest_framework import status
 from .serializers import CourtCasesSerializer, CustomUserSerializer
 from .models import CustomUser, CourtCases
 
+# from .tasks import add as _add
+
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated, IsAdminUser])
@@ -40,7 +42,7 @@ def get_user_by_id(request, pk):
 @permission_classes([IsAuthenticated])
 def get_courts(request):
     user = request.user
-
+    # _add.delay(4,4)
     if user.is_admin:
         queryset = CourtCases.objects.all()
     else:

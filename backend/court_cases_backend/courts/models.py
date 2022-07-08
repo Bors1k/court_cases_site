@@ -158,10 +158,13 @@ class NotifyTask(models.Model):
     class Meta:
         verbose_name = 'Задача на уведомление'
         verbose_name_plural = 'Задачи на уведомления'
-    court_id = models.ForeignKey(CourtCases, on_delete=models.CASCADE)
-    notify_message = models.TextField()
-    date_of_notify = models.DateField()
-    notify_cout = models.IntegerField()
-    max_count_before_chief_notify = models.IntegerField()
-    chief_message = models.TextField(blank=True)
-    count_update_day = models.IntegerField()
+    court_id = models.ForeignKey(CourtCases, on_delete=models.CASCADE, verbose_name='Дело')
+    notify_message = models.TextField(verbose_name='Текст сообщения')
+    date_of_notify = models.DateField(verbose_name='Дата, когда будет отправлено сообщение')
+    notify_count = models.IntegerField(verbose_name='Кол-во отправленых уведомлений', default=0)
+    max_count_before_chief_notify = models.IntegerField(verbose_name='Кол-во уведомлений, перед сообщеним к ')
+    chief_message = models.TextField(blank=True, verbose_name='Текст сообщения начальникам')
+    count_update_day = models.IntegerField(verbose_name='Обновить дату на ...дней')
+
+    def __str__(self) -> str:
+        return f'Дело - {self.court_id.number_of_court} | Сообщение - {self.notify_message[:30]}...'
