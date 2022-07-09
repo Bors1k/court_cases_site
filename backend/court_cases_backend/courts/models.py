@@ -74,10 +74,10 @@ class CustomUser(AbstractBaseUser):
 
     def __str__(self):
         if self.patronymic:
-            _patronymic = '{self.patronymic[0]}.'
+            _patronymic = f'{self.patronymic[0]}.'
         else:
             _patronymic = ''
-        return f'{self.name} {self.surename[0]}.{_patronymic}'
+        return f'{self.surename} {self.name[0]}.{_patronymic}'
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
@@ -150,7 +150,7 @@ class CourtCases(models.Model):
     summary_of_court =  models.CharField(max_length=255, blank=True, verbose_name='ИТОГ по делу')
         
     def __str__(self):
-        return f'{self.number_of_court} | {self.case_source_and_summ}' 
+        return f'{self.number_of_court} | {self.user_id}' 
 
     
 
