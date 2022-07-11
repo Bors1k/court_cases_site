@@ -4,7 +4,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
-# user class
 class CustomUserManager(BaseUserManager):
     def create_user(self, email: str, name: str, surename: str, password=None, **extra_fields):
         if not email:
@@ -103,7 +102,7 @@ class CourtCases(models.Model):
         verbose_name_plural = 'Судебные дела'
 
 
-    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Куратор')
     number_of_court = models.FloatField(verbose_name='Номер дела', unique=True)
     case_source_and_summ = models.CharField(max_length=255, verbose_name='Кем заявлены требования и (сумма заявленных требований)')
     case_purpose = models.CharField(max_length=255, verbose_name='К кому заявлены требования + (3 лицо)')
@@ -152,8 +151,6 @@ class CourtCases(models.Model):
     def __str__(self):
         return f'{self.number_of_court} | {self.user_id}' 
 
-    
-
 class NotifyTask(models.Model):
     class Meta:
         verbose_name = 'Задача на уведомление'
@@ -162,8 +159,8 @@ class NotifyTask(models.Model):
     notify_message = models.TextField(verbose_name='Текст сообщения')
     date_of_notify = models.DateField(verbose_name='Дата, когда будет отправлено сообщение')
     notify_count = models.IntegerField(verbose_name='Кол-во отправленых уведомлений', default=0)
-    max_count_before_chief_notify = models.IntegerField(verbose_name='Кол-во уведомлений, перед сообщеним к ')
-    chief_message = models.TextField(blank=True, verbose_name='Текст сообщения начальникам')
+    max_count_before_chief_notify = models.IntegerField(verbose_name='Кол-во уведомлений, перед сообщением начальникам')
+    source_column = models.CharField(max_length=255,blank=True, verbose_name='Колонка проверки')
     count_update_day = models.IntegerField(verbose_name='Обновить дату на ...дней')
 
     def __str__(self) -> str:

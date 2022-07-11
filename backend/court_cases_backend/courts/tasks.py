@@ -2,6 +2,7 @@ from datetime import date, datetime, timedelta
 from .celery import app
 from django.core.mail import send_mail
 from .models import NotifyTask, CustomUser, CourtCases
+from .ValidateCourts import run
 
 @app.task
 def check_tasks():
@@ -41,3 +42,7 @@ def check_tasks():
 @app.task
 def send_email_to_user(send_to, message):
     return (send_to, message)
+
+@app.task
+def create_task(court_id):
+    run(court_id)
