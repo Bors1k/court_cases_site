@@ -2,7 +2,7 @@ from dataclasses import fields
 from django.conf import settings
 
 from rest_framework import serializers
-from .models import CustomUser, CourtCases
+from .models import CustomUser, CourtCases, NotifyTask
 import court_cases_backend.settings as settings
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -16,4 +16,8 @@ class CourtCasesSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourtCases
         fields = '__all__'
-        
+    
+class NotifyTasksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NotifyTask
+        fields = '__all__'

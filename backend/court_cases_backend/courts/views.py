@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework import status
-from .serializers import CourtCasesSerializer, CustomUserSerializer
-from .models import CustomUser, CourtCases
+from .serializers import CourtCasesSerializer, CustomUserSerializer, NotifyTasksSerializer
+from .models import CustomUser, CourtCases, NotifyTask
 from .tasks import create_task
 
 # from .tasks import add as _add
@@ -50,6 +50,23 @@ def get_courts(request):
         queryset = CourtCases.objects.filter(user_id=user.id)
 
     serializer_class = CourtCasesSerializer(queryset, many=True)
+
+    return Response(serializer_class.data)
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_notifies_for_court(request, pk):
+    user = request.user
+    
+    # _add.delay(4,4)
+    if user.is_admin or user.is_chief:
+        queryset = NotifyTask.objects.filter(court_id = pk)
+    else:
+        content = {'detail': 'You have no permissions to this court'}
+        return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
+    serializer_class = NotifyTasksSerializer(queryset, many=True)
 
     return Response(serializer_class.data)
 
@@ -106,6 +123,8 @@ def create_court(request):
     print({**data, "user_id":user.id})
 
     court = CourtCases.objects.create(**{**data, "user_id":user})
+
+    create_task.delay(court.id)
     
     serializer_class = CourtCasesSerializer(court, many=False)
 
