@@ -6,6 +6,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework import status
 from .serializers import CourtCasesSerializer, CustomUserSerializer
 from .models import CustomUser, CourtCases
+from .tasks import create_task
 
 # from .tasks import add as _add
 
@@ -88,6 +89,8 @@ def update_court(request, pk):
             setattr(court, str(field), data[str(field)])
 
         court.save()
+
+        create_task.delay(court.id)
 
         serializer_class = CourtCasesSerializer(court, many=False)
 

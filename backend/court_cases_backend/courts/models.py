@@ -164,4 +164,4 @@ class NotifyTask(models.Model):
     count_update_day = models.IntegerField(verbose_name='Обновить дату на ...дней')
 
     def __str__(self) -> str:
-        return f'Дело - {self.court_id.number_of_court} | Сообщение - {self.notify_message[:30]}...'
+        return f'Дело - {self.court_id.number_of_court} | Сообщение - {self.notify_message[:60]}...'

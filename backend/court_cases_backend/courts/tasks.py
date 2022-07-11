@@ -2,7 +2,7 @@ from datetime import date, datetime, timedelta
 from .celery import app
 from django.core.mail import send_mail
 from .models import NotifyTask, CustomUser, CourtCases
-from .ValidateCourts import run
+from .validate_courts.main_court_validator import run
 
 @app.task
 def check_tasks():

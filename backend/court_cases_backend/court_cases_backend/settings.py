@@ -153,4 +153,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'courts.CustomUser'
 
-DATE_INPUT_FORMATS = ['%d.%m.%Y']
+# Должно помогать в изменение формата даты при вводе пользователем, но оно игнорируется, 
+# что просто, что если использовать в сериализаторе
+DATE_INPUT_FORMATS = ['%d.%m.%Y'] # бесполезная фигня, я не понимаю почему, но это не работает
