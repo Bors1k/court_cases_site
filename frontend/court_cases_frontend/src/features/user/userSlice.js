@@ -5,23 +5,36 @@ import Cookies from "js-cookie";
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
-        name: '',
-        surename: '',
-        patronymic: '',
-        email: '',
-        is_admin: false,
-        is_chief: false
+        userInfo: {
+            name: '',
+            surename: '',
+            patronymic: '',
+            email: '',
+            is_admin: false,
+            is_chief: false
+        },
+        status: 'idle',
+        error: null
+        
     },
     reducers: {
     },
     extraReducers(builder){
-        builder.addCase(getProfileInfoAsync.fulfilled, (state, action)=>{
-            state.name = action.payload.name
-            state.surename = action.payload.surename
-            state.patronymic = action.payload.patronymic
-            state.email = action.payload.email
-            state.is_admin = action.payload.is_admin
-            state.is_chief = action.payload.is_chief
+        builder.addCase(getProfileInfoAsync.pending, (state, action)=>{
+            state.status = 'loading'
+        })
+        .addCase(getProfileInfoAsync.fulfilled, (state, action)=>{
+            state.status = 'succeded'
+            state.userInfo.name = action.payload.name
+            state.userInfo.surename = action.payload.surename
+            state.userInfo.patronymic = action.payload.patronymic
+            state.userInfo.email = action.payload.email
+            state.userInfo.is_admin = action.payload.is_admin
+            state.userInfo.is_chief = action.payload.is_chief
+        })
+        .addCase(getProfileInfoAsync.rejected, (state, action)=>{
+            state.status = 'failed'
+            state.error = action.error.message
         })
     }
 })
@@ -31,6 +44,6 @@ export const getProfileInfoAsync = createAsyncThunk('users/getInfo', async () =>
     return response.data.userInfo
 })
 
-export const { } = userSlice.actions
+export const selectUser = state => state.user.userInfo
 
 export default userSlice.reducer

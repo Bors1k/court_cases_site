@@ -8,6 +8,7 @@ import ProfileScreen from './screens/ProfileScreen'
 import HomeScreen from './screens/HomeScreen';
 import { useSelector, useDispatch} from 'react-redux'
 import { signout } from './features/auth/authSlice'
+// import { cleareUser } from './features/user/userSlice'
 
 function App() {
   let location = useLocation();
@@ -18,6 +19,7 @@ function App() {
   React.useEffect(() => {
     if (location.pathname == '/logout'){
       dispatch(signout())
+      // dispatch(cleareUser())
       navigate('/login')
     }
   }, [location]);

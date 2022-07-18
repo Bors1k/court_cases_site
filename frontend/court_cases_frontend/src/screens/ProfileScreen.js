@@ -6,16 +6,17 @@ import Row from 'react-bootstrap/Row';
 import FormContainer from "../components/FormContainer";
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getProfileInfoAsync } from '../features/user/userSlice'
+import { getProfileInfoAsync, selectUser } from '../features/user/userSlice'
+
 
 function ProfileScreen (){
     
     const dispatch = useDispatch()
     
-    dispatch(getProfileInfoAsync())
-    
-    const userProfile = useSelector((state)=>state.user)
-    
+    const userProfile = useSelector(selectUser)
+
+    const userStatus = useSelector(state => state.user.status)
+
     const [name, setName] = useState(userProfile.name)
     const [surename, setSurename] = useState(userProfile.surename)
     const [patronymic, setPatronymic] = useState(userProfile.patronymic)
@@ -26,9 +27,20 @@ function ProfileScreen (){
 
     const [password, setPassword] = useState('')
     
-    // useEffect(()=>{
+    useEffect(()=>{
+        if (userStatus=='idle'){
+            dispatch(getProfileInfoAsync())
+        }
+        else if (userStatus == 'succeded'){
+            setName(userProfile.name)
+            setSurename(userProfile.surename)
+            setPatronymic(userProfile.patronymic)
+            setEmail(userProfile.email)
+            setIsAdmin(userProfile.is_admin)
+            setIsChief(userProfile.is_chief)
+        }
         
-    // })
+    }, [userStatus, dispatch])
 
     return (
         <FormContainer>
@@ -38,7 +50,7 @@ function ProfileScreen (){
                     Имя
                     </Form.Label>
                     <Col sm="10">
-                    <Form.Control type='text' value={name} onChange={(e)=>setName(e.target.value)}/>
+                    <Form.Control type='text' value={name} onChange={e => setName(e.target.value)}/>
                     </Col>
                 </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formPlainTextSurename">
