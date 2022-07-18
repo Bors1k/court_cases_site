@@ -27,7 +27,7 @@ def get_current_user_info(request):
     queryset = CustomUser.objects.get(id=user.id)
     serializer_class = CustomUserSerializer(queryset, many=False)
     
-    return Response(serializer_class.data)
+    return Response({"userInfo": serializer_class.data, "fio": str(user)})
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
