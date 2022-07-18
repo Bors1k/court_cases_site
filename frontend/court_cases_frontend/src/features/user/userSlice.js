@@ -18,6 +18,18 @@ export const userSlice = createSlice({
         
     },
     reducers: {
+        clearStatus: (state)=>{
+            state.userInfo = {
+                    name: '',
+                    surename: '',
+                    patronymic: '',
+                    email: '',
+                    is_admin: false,
+                    is_chief: false
+                }
+            state.status = 'idle'
+            state.error = null
+            }
     },
     extraReducers(builder){
         builder.addCase(getProfileInfoAsync.pending, (state, action)=>{
@@ -43,6 +55,8 @@ export const getProfileInfoAsync = createAsyncThunk('users/getInfo', async () =>
     const response = await axiosInstance.get('users/current-detail/')
     return response.data.userInfo
 })
+
+export const { clearStatus } = userSlice.actions
 
 export const selectUser = state => state.user.userInfo
 

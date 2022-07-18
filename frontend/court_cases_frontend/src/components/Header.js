@@ -15,7 +15,7 @@ function Header (){
   const userLogin = useSelector((state)=>state.auth)
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" style={{"marginBottom": "10px"}}>
       <Container>
         <Navbar.Brand><Link to="/" className='Link'>Реестр юридических дел</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

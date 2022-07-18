@@ -1,9 +1,9 @@
-// import { Container } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import FormContainer from "../components/FormContainer";
+import AlertButton from '../components/AlertButton'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProfileInfoAsync, selectUser } from '../features/user/userSlice'
@@ -16,6 +16,7 @@ function ProfileScreen (){
     const userProfile = useSelector(selectUser)
 
     const userStatus = useSelector(state => state.user.status)
+    const userErrorMessage = useSelector(state=>state.user.error)
 
     const [name, setName] = useState(userProfile.name)
     const [surename, setSurename] = useState(userProfile.surename)
@@ -26,6 +27,8 @@ function ProfileScreen (){
     const [isChief, setIsChief] = useState(userProfile.is_chief)
 
     const [password, setPassword] = useState('')
+
+    const onRefreshProfile = ()=> dispatch(getProfileInfoAsync()) 
     
     useEffect(()=>{
         if (userStatus=='idle'){
@@ -44,6 +47,11 @@ function ProfileScreen (){
 
     return (
         <FormContainer>
+            { userStatus == 'failed' ? 
+                    <AlertButton message={userErrorMessage} onRefresh={onRefreshProfile}></AlertButton>
+                    :
+                    (<></>)
+                }
             <Form style={{'marginTop': '10px'}}>
             <Form.Group as={Row} className="mb-3" controlId="formPlainTextName">
                     <Form.Label column sm="2">
@@ -114,10 +122,10 @@ function ProfileScreen (){
                         />
                     </Col>
                 </Form.Group>
-            
-                <Button variant="primary" type="submit">
+                <Button variant="primary" className='mb-3' type="submit">
                     Сохранить
-                </Button>
+                </Button> 
+                
             </Form>
 
         </FormContainer>
