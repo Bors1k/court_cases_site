@@ -1,31 +1,36 @@
-// import { createSlice } from '@reduxjs/toolkit'
-// import axiosInstance from '../../services/axios/index'
-// import Cookies from "js-cookie";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axiosInstance from '../../services/axios/index'
+import Cookies from "js-cookie";
 
-// export const userSlice = createSlice({
-//     name: 'user',
-//     initialState: {
-//         fio: ,
-//     },
-//     reducers: {
-//         signin (state, action) {
-//             state.token = action.payload.token
-//         },
-//         signout (state) {
-//             state.token = null
-//         }
-//     }
-// })
+export const userSlice = createSlice({
+    name: 'user',
+    initialState: {
+        name: '',
+        surename: '',
+        patronymic: '',
+        email: '',
+        is_admin: false,
+        is_chief: false
+    },
+    reducers: {
+    },
+    extraReducers(builder){
+        builder.addCase(getProfileInfoAsync.fulfilled, (state, action)=>{
+            state.name = action.payload.name
+            state.surename = action.payload.surename
+            state.patronymic = action.payload.patronymic
+            state.email = action.payload.email
+            state.is_admin = action.payload.is_admin
+            state.is_chief = action.payload.is_chief
+        })
+    }
+})
 
-// export const signinAsync = (login) => async (dispatch) => {
-//     console.log(login)
-//     const { data } = await axiosInstance.post('api-token-auth/', {username: login.username, password: login.password})
-//     Cookies.set('auth-token',data.token)
-//     dispatch(signin(data))
+export const getProfileInfoAsync = createAsyncThunk('users/getInfo', async () => {
+    const response = await axiosInstance.get('users/current-detail/')
+    return response.data.userInfo
+})
 
+export const { } = userSlice.actions
 
-// }
-
-// export const { signin, signout } = authSlice.actions
-
-// export default authSlice.reducer
+export default userSlice.reducer

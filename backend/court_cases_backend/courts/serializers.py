@@ -8,7 +8,7 @@ import court_cases_backend.settings as settings
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'email', 'name', 'surename', 'patronymic']
+        fields = ['id', 'email', 'name', 'surename', 'patronymic', 'is_admin', 'is_chief']
 
 class CourtCasesSerializer(serializers.ModelSerializer):
     # fstinst_date_of_dicision = serializers.DateField(format='%d.%m.%Y',input_formats=['%d.%m.%Y'])
