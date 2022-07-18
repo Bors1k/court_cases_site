@@ -2,12 +2,18 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useDispatch, useSelector } from 'react-redux'
+
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import LoginScreen from '../screens/LoginScreen';
 
 function Header (){
-return (
+  const userLogin = useSelector((state)=>state.auth)
+
+  return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">Реестр юридических дел</Navbar.Brand>
+        <Navbar.Brand><Link to="/">Реестр юридических дел</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           {/* <Nav className="me-auto">
@@ -16,9 +22,16 @@ return (
           </Nav> */}
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">
-                <Navbar.Text>
-                    Авторизован как: <a href="#profile">Новиков М.А.</a>
-                </Navbar.Text>
+          {userLogin.fio ? (
+                            <Navbar.Text>
+                            Авторизован как: <Link to="/profile">{userLogin.fio}</Link>
+                        </Navbar.Text>
+          ):(
+            <Navbar.Text>
+                        <Link to="/login">Авторизоваться</Link>
+            </Navbar.Text>
+          )
+        }
         </Navbar.Collapse>
       </Container>
     </Navbar>
