@@ -25,16 +25,18 @@ export const authSlice = createSlice({
 })
 
 export const signinAsync = (login) => async (dispatch) => {
-    console.log(login)
-    const { data } = await axiosInstance.post('api-token-auth/', {username: login.username, password: login.password})
-    Cookies.set('auth-token',data.token)
+    await axiosInstance.post('api-token-auth/', {username: login.username, password: login.password}).then(
+        function (response){
+            Cookies.set('auth-token',response.data.token)
+            dispatch(signin(response.data))
+        }
+    )
     await axiosInstance.get('users/current-detail/').then(
         function (response){
             dispatch(setfio(response.data.fio))
             Cookies.set('fio',response.data.fio)
         }
     )
-    dispatch(signin(data))
 }
 
 export const { signin, setfio, signout } = authSlice.actions

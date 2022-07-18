@@ -24,9 +24,6 @@ function LoginScreen() {
     }
 
     useEffect(()=>{
-        // if (userLogin.token != null){
-        //     navigate('/')
-        // }
     })
 
     return (
@@ -53,7 +50,7 @@ function LoginScreen() {
                 </FormContainer>
                 ): (
                     <Container>
-                        Вы уже авторизованы. Перейти к <Link to="/">Делам</Link> или в <Link to="/profile">Профиль</Link>
+                        Вы уже авторизованы. Перейти к <Link to="/courts">Делам</Link> или в <Link to="/profile">Профиль</Link>
                     </Container>
                 )}
         </Container>
