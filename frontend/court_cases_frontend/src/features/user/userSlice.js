@@ -18,7 +18,7 @@ export const userSlice = createSlice({
         
     },
     reducers: {
-        clearStatus: (state)=>{
+        clearUser: (state)=>{
             state.userInfo = {
                     name: '',
                     surename: '',
@@ -90,7 +90,7 @@ export const updateProfile = createAsyncThunk('user/updateProfile', async (data)
     return response.data
 })
 
-export const { clearStatus } = userSlice.actions
+export const { clearUser } = userSlice.actions
 
 export const selectUser = state => state.user.userInfo
 

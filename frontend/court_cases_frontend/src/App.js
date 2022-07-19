@@ -19,7 +19,7 @@ function App() {
   React.useEffect(() => {
     if (location.pathname == '/logout'){
       dispatch(signout())
-      dispatch(clearStatus())
+      dispatch(clearUser())
       navigate('/login')
     }
   }, [location]);

@@ -7,6 +7,7 @@ import AlertButton from '../components/AlertButton'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProfileInfoAsync, selectUser, updateProfile } from '../features/user/userSlice'
+import { setfio } from '../features/auth/authSlice'
 import PasswordForm from '../components/PasswordForm';
 
 
@@ -51,6 +52,8 @@ function ProfileScreen (){
             setName(userProfile.name)
             setSurename(userProfile.surename)
             setPatronymic(userProfile.patronymic)
+            dispatch(setfio(`${surename} ${name[0]}.${patronymic[0]}.`))
+
         }
         
     }, [userStatus, dispatch])
