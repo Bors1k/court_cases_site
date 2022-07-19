@@ -105,6 +105,24 @@ def get_court_details(request, pk):
 @api_view(['PUT'])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
+def update_user(request):
+    user = request.user
+    data = request.data
+    
+    print(data)
+
+    serializer_class = CustomUserSerializer(user, many=False)
+    
+    for field in data:
+        setattr(user, str(field), data[str(field)])
+    
+    user.save()
+
+    return Response(serializer_class.data)
+
+@api_view(['PUT'])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def update_court(request, pk):
     user = request.user
     data = request.data

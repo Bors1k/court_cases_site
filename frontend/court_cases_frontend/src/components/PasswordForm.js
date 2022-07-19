@@ -53,7 +53,7 @@ function PasswordForm({children}) {
     }
 
     useEffect(()=>{
-        if (userStatus == 'updated'){
+        if (userStatus == 'updated-password'){
             setIncorrRequest(false)
             setFirstPassword('')
             setSecondPassword('')

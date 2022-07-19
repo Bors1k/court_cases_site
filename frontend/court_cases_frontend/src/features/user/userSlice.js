@@ -33,10 +33,10 @@ export const userSlice = createSlice({
     },
     extraReducers(builder){
         builder.addCase(getProfileInfoAsync.pending, (state, action)=>{
-            state.status = 'loading'
+            state.status = 'loading-info'
         })
         .addCase(getProfileInfoAsync.fulfilled, (state, action)=>{
-            state.status = 'succeded'
+            state.status = 'succeded-info'
             state.userInfo.name = action.payload.name
             state.userInfo.surename = action.payload.surename
             state.userInfo.patronymic = action.payload.patronymic
@@ -49,13 +49,26 @@ export const userSlice = createSlice({
             state.error = action.error.message
         })
         builder.addCase(updatePassword.pending, (state, action) => {
-            state.status = 'updating'
+            state.status = 'updating-password'
         })
         .addCase(updatePassword.fulfilled, (state, action) => {
-            state.status = 'updated'
+            state.status = 'updated-password'
             
         })
         .addCase(updatePassword.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+        })
+        builder.addCase(updateProfile.pending, (state, action)=>{
+            state.status = 'updating-profile'
+        })
+        .addCase(updateProfile.fulfilled, (state,action)=>{
+            state.status = 'updated-profile'
+            state.userInfo.name = action.payload.name
+            state.userInfo.surename = action.payload.surename
+            state.userInfo.patronymic = action.payload.patronymic
+        })
+        .addCase(updateProfile.rejected, (state, action)=>{
             state.status = 'failed'
             state.error = action.error.message
         })
@@ -69,6 +82,11 @@ export const getProfileInfoAsync = createAsyncThunk('user/getInfo', async () => 
 
 export const updatePassword = createAsyncThunk('user/updatePassword', async password => {
     const response = await axiosInstance.put('users/update-password/', {'password': password})
+    return response.data
+})
+
+export const updateProfile = createAsyncThunk('user/updateProfile', async (data) =>{
+    const response = await axiosInstance.put('users/update-info/', data)
     return response.data
 })
 

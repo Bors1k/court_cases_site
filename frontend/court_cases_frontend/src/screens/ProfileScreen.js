@@ -6,7 +6,7 @@ import FormContainer from "../components/FormContainer";
 import AlertButton from '../components/AlertButton'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getProfileInfoAsync, selectUser } from '../features/user/userSlice'
+import { getProfileInfoAsync, selectUser, updateProfile } from '../features/user/userSlice'
 import PasswordForm from '../components/PasswordForm';
 
 
@@ -31,18 +31,26 @@ function ProfileScreen (){
 
     const onRefreshProfile = ()=> dispatch(getProfileInfoAsync()) 
 
+    const onUpdateProfile = () => {
+        dispatch(updateProfile({name, surename, patronymic}))
+    }
     
     useEffect(()=>{
         if (userStatus=='idle'){
             dispatch(getProfileInfoAsync())
         }
-        else if (userStatus == 'succeded'){
+        else if (userStatus == 'succeded-info'){
             setName(userProfile.name)
             setSurename(userProfile.surename)
             setPatronymic(userProfile.patronymic)
             setEmail(userProfile.email)
             setIsAdmin(userProfile.is_admin)
             setIsChief(userProfile.is_chief)
+        }
+        else if(userStatus == 'updated-profile'){
+            setName(userProfile.name)
+            setSurename(userProfile.surename)
+            setPatronymic(userProfile.patronymic)
         }
         
     }, [userStatus, dispatch])
@@ -55,6 +63,14 @@ function ProfileScreen (){
                     (<></>)
                 }
             <Form noValidate validated={validForm} style={{'marginTop': '10px'}} onChange={()=>setValidForm(true)}>
+            <Form.Group as={Row} className="mb-3" controlId="formPlainTextSurename">
+                    <Form.Label column sm="2">
+                    Фамилия
+                    </Form.Label>
+                    <Col sm="10">
+                    <Form.Control required type='text' value={surename} onChange={(e)=>setSurename(e.target.value)}/>
+                    </Col>
+                </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formPlainTextName">
                     <Form.Label column sm="2">
                     Имя
@@ -65,14 +81,6 @@ function ProfileScreen (){
                     type='text'
                     value={name} 
                     onChange={e => setName(e.target.value)}/>
-                    </Col>
-                </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="formPlainTextSurename">
-                    <Form.Label column sm="2">
-                    Фамилия
-                    </Form.Label>
-                    <Col sm="10">
-                    <Form.Control required type='text' value={surename} onChange={(e)=>setSurename(e.target.value)}/>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="formPlainTextPatron">
@@ -113,7 +121,7 @@ function ProfileScreen (){
                         />
                     </Col>
                 </Form.Group>
-                <Button variant="primary" className='mb-3' type="submit">
+                <Button variant="primary" className='mb-3' type="button" onClick={onUpdateProfile}>
                     Сохранить
                 </Button> 
                 
