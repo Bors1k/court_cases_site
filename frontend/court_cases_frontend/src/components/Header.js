@@ -19,6 +19,9 @@ function Header (){
       <Container>
         <Navbar.Brand><Link to="/" className='Link'>Реестр юридических дел</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Nav className="me-auto">
+            <Nav.Item><Link to="/courts" className='Link'>Список дел</Link></Nav.Item>
+          </Nav>
           <Navbar.Collapse className='justify-content-end'>
             {userLogin.fio ? (
               <NavDropdown title={userLogin.fio}>
