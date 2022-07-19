@@ -3,10 +3,12 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import FormContainer from "../components/FormContainer";
+import InputGroup from 'react-bootstrap/InputGroup';
 import AlertButton from '../components/AlertButton'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProfileInfoAsync, selectUser } from '../features/user/userSlice'
+import PasswordForm from '../components/PasswordForm';
 
 
 function ProfileScreen (){
@@ -28,7 +30,12 @@ function ProfileScreen (){
 
     const [password, setPassword] = useState('')
 
+    const [validForm, setValidForm] = useState(false)
+
     const onRefreshProfile = ()=> dispatch(getProfileInfoAsync()) 
+    const onChangePassword = (e) => {
+        setPassword(e.target.value)
+    }
     
     useEffect(()=>{
         if (userStatus=='idle'){
@@ -52,13 +59,17 @@ function ProfileScreen (){
                     :
                     (<></>)
                 }
-            <Form style={{'marginTop': '10px'}}>
+            <Form noValidate validated={validForm} style={{'marginTop': '10px'}} onChange={()=>setValidForm(true)}>
             <Form.Group as={Row} className="mb-3" controlId="formPlainTextName">
                     <Form.Label column sm="2">
                     Имя
                     </Form.Label>
                     <Col sm="10">
-                    <Form.Control type='text' value={name} onChange={e => setName(e.target.value)}/>
+                    <Form.Control 
+                    required
+                    type='text'
+                    value={name} 
+                    onChange={e => setName(e.target.value)}/>
                     </Col>
                 </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formPlainTextSurename">
@@ -66,7 +77,7 @@ function ProfileScreen (){
                     Фамилия
                     </Form.Label>
                     <Col sm="10">
-                    <Form.Control type='text' value={surename} onChange={(e)=>setSurename(e.target.value)}/>
+                    <Form.Control required type='text' value={surename} onChange={(e)=>setSurename(e.target.value)}/>
                     </Col>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="formPlainTextPatron">
@@ -86,22 +97,7 @@ function ProfileScreen (){
                     </Col>
                 </Form.Group>
 
-                <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-                    <Form.Label column sm="2">
-                    Пароль
-                    </Form.Label>
-                    <Col sm="10">
-                    <Form.Control type="password" placeholder="Введите новый пароль" />
-                    </Col>
-                </Form.Group>
-                <Form.Group as={Row} className="mb-3" controlId="formPlaintextAgainPassword">
-                    <Form.Label column sm="2">
-                    Пароль еще раз
-                    </Form.Label>
-                    <Col sm="10">
-                    <Form.Control type="password" placeholder="Введите новый пароль" />
-                    </Col>
-                </Form.Group>
+               
                 <Form.Group as={Row} className="mb-3" controlId="Switches">
                     <Col sm="10">
                         <Form.Check 
@@ -128,7 +124,10 @@ function ProfileScreen (){
                 
             </Form>
 
+            <PasswordForm/>
         </FormContainer>
+
+        
     );
     }
      

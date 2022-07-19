@@ -30,7 +30,7 @@ function LoginScreen() {
         <Container>
             { !userLogin.token ? (
                 <FormContainer>
-                    <Form style={{"marginTop": "10px"}} onSubmit={onSignIn}>
+                    <Form  onSubmit={onSignIn}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email адрес</Form.Label>
                             <Form.Control type="email" placeholder="Введите email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
