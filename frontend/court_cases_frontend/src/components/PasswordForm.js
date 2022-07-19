@@ -1,23 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
+import { updatePassword } from '../features/user/userSlice'; 
+import { useSelector, useDispatch } from 'react-redux'
 
 function PasswordForm({children}) {
+
     const [open, setOpen] = useState(false);
     const [firstPassword, setFirstPassword] = useState('');
-    const [firstPasswordInvalid, setFirstPasswordInvalid] = useState(false);
-    // const [secondPassword, setSecondPassword] = useState('');
-    const [secondPasswordInvalid, setSecondPasswordInvalid] = useState(false);
+    const [secondPassword, setSecondPassword] = useState('');
+    const [firstPasswordInvalid, setFirstPasswordInvalid] = useState(true);
+    const [secondPasswordInvalid, setSecondPasswordInvalid] = useState(true);
+
+    const [incorrRequest, setIncorrRequest] = useState(false);
+
+    const dispatch = useDispatch()
+    
+    const userStatus = useSelector(state => state.user.status)
+    const userErrorMessage = useSelector(state=>state.user.error)
 
     const onSavePassword = ()=>{
-        setFirstPassword('')
-        setFirstPasswordInvalid(false)
-        setSecondPassword('')
-        setSecondPasswordInvalid(false)
-        setOpen(false)
+        if (!firstPasswordInvalid && !secondPasswordInvalid){
+            dispatch(updatePassword(firstPassword))
+        }
+        else{
+            setIncorrRequest(true)
+        }
     }
+    
     var numericRe = new RegExp('[0-9]*')
+    
     const onChangeFirstPassword = (e)=>{
         setFirstPassword(e.target.value)
         if ((e.target.value).length < 8 || numericRe.exec(e.target.value)[0].length == (e.target.value).length) {
@@ -29,6 +43,7 @@ function PasswordForm({children}) {
     }
 
     const onChangeSecondPassword = (e)=>{
+        setSecondPassword(e.target.value)
         if (firstPassword != e.target.value){
             setSecondPasswordInvalid(true)
         }
@@ -37,10 +52,24 @@ function PasswordForm({children}) {
         }
     }
 
+    useEffect(()=>{
+        if (userStatus == 'updated'){
+            setIncorrRequest(false)
+            setFirstPassword('')
+            setSecondPassword('')
+            setFirstPasswordInvalid(true)
+            setSecondPasswordInvalid(true)
+            setOpen(false)
+        }
+    }, [dispatch, userStatus])
+
   return (
     <>
+        {incorrRequest ? <Alert variant='danger'>
+                    Поля с паролями заполнены неверно.
+                </Alert>: <></>}
         <Button
-        onClick={() => setOpen(!open)}
+        onClick={() => {setOpen(!open); setIncorrRequest(false)}}
         aria-controls="example-collapse-text"
         aria-expanded={open}
         variant='secondary'
@@ -55,6 +84,7 @@ function PasswordForm({children}) {
                 isInvalid={firstPasswordInvalid} 
                 placeholder="Введите новый пароль"  
                 isValid={true} 
+                value={firstPassword}
                 onChange={onChangeFirstPassword}/>
                 <Form.Control.Feedback type="invalid">
                   Пароль не соответствует требованиям
@@ -74,6 +104,7 @@ function PasswordForm({children}) {
                 <Form.Control type="password" 
                 placeholder="Введите новый пароль еще раз" 
                 isValid={true}
+                value={secondPassword}
                 isInvalid={secondPasswordInvalid}
                 onChange={onChangeSecondPassword}/>
                 <Form.Control.Feedback type="invalid">

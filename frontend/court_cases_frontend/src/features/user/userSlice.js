@@ -48,12 +48,28 @@ export const userSlice = createSlice({
             state.status = 'failed'
             state.error = action.error.message
         })
+        builder.addCase(updatePassword.pending, (state, action) => {
+            state.status = 'updating'
+        })
+        .addCase(updatePassword.fulfilled, (state, action) => {
+            state.status = 'updated'
+            
+        })
+        .addCase(updatePassword.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+        })
     }
 })
 
-export const getProfileInfoAsync = createAsyncThunk('users/getInfo', async () => {
+export const getProfileInfoAsync = createAsyncThunk('user/getInfo', async () => {
     const response = await axiosInstance.get('users/current-detail/')
     return response.data.userInfo
+})
+
+export const updatePassword = createAsyncThunk('user/updatePassword', async password => {
+    const response = await axiosInstance.put('users/update-password/', {'password': password})
+    return response.data
 })
 
 export const { clearStatus } = userSlice.actions

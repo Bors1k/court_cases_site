@@ -24,6 +24,7 @@ urlpatterns = [
     path('notifies/<str:pk>/', views.get_notifies_for_court, name='notifies'),
     path('users/',views.get_users,name='users'),
     path('users/current-detail/',views.get_current_user_info,name='user_info'),
+    path('users/update-password/', views.update_password, name='update-password'),
     path('users/<str:pk>/',views.get_user_by_id,name='user_by_id_detail'),
     path('courts/',views.get_courts,name='courts'),
     path('courts/create/', views.create_court, name='create_court'),

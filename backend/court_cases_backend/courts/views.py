@@ -4,9 +4,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework import status
-from .serializers import CourtCasesSerializer, CustomUserSerializer, NotifyTasksSerializer
+from .serializers import ChangePasswordSerializer, CourtCasesSerializer, CustomUserSerializer, NotifyTasksSerializer
 from .models import CustomUser, CourtCases, NotifyTask
 from .tasks import create_task
+from django.contrib.auth.hashers import make_password
 
 # from .tasks import add as _add
 
@@ -27,10 +28,21 @@ def get_current_user_info(request):
     queryset = CustomUser.objects.get(id=user.id)
     serializer_class = CustomUserSerializer(queryset, many=False)
 
-    
-
     return Response({"userInfo": serializer_class.data, "fio": str(user)})
 
+@api_view(['PUT'])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def update_password(request):
+    user = request.user
+    data = request.data
+    
+    serializer = CustomUserSerializer(user, many=False)
+
+    user.password = make_password(data['password'])
+    user.save()
+
+    return Response({'status': 'password set', 'userInfo': serializer.data }, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])

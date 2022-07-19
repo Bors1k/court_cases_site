@@ -3,7 +3,6 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import FormContainer from "../components/FormContainer";
-import InputGroup from 'react-bootstrap/InputGroup';
 import AlertButton from '../components/AlertButton'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
@@ -28,14 +27,10 @@ function ProfileScreen (){
     const [isAdmin, setIsAdmin] = useState(userProfile.is_admin)
     const [isChief, setIsChief] = useState(userProfile.is_chief)
 
-    const [password, setPassword] = useState('')
-
     const [validForm, setValidForm] = useState(false)
 
     const onRefreshProfile = ()=> dispatch(getProfileInfoAsync()) 
-    const onChangePassword = (e) => {
-        setPassword(e.target.value)
-    }
+
     
     useEffect(()=>{
         if (userStatus=='idle'){
