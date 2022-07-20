@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import JSONdateManager from './JSONdateManager'
 
 function CourtForm ({court}){   
     const [courtNumber, setCourtNumber] = useState(court.number_of_court)
@@ -12,6 +13,7 @@ function CourtForm ({court}){
     const [number_case_in_first_instance, setNumber_case_in_first_instance] = useState(court.number_case_in_first_instance)
     const [number_case_in_numenklature, setNumber_case_in_numenklature] = useState(court.number_case_in_numenklature)
     
+    const [fstinst_dates_of_court_hearing, setFstinst_dates_of_court_hearing] = useState(court.fstinst_dates_of_court_hearing)
 
     return (
         <Form>
@@ -81,6 +83,13 @@ function CourtForm ({court}){
                     {/* <hr></hr> */}
                 </Col>
             </Row>
+
+            <Form.Group className="mb-3" controlId="fstinst_dates_of_court_hearing">
+                <JSONdateManager key={1} json={fstinst_dates_of_court_hearing} 
+                setJson={setFstinst_dates_of_court_hearing}
+                name="Даты судебных заседаний"
+                />
+            </Form.Group>
 
             <Form.Group className="mb-3">
                 <Button type="button" >Сохранить</Button>
