@@ -13,3 +13,8 @@ body {
   text-decoration: none;
   color: gray;
 }
+
+.spinner {
+  margin: auto;
+  align-self: center;
+}

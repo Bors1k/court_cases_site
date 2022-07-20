@@ -17,18 +17,16 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ('password')
 
-    # def update(self, instance, validated_data):
-        # instance.set_password(validated_data['password'])
-        # instance.save()
-
-        # return instance
-
 class CourtCasesSerializer(serializers.ModelSerializer):
-    # fstinst_date_of_dicision = serializers.DateField(format='%d.%m.%Y',input_formats=['%d.%m.%Y'])
+    user_name = serializers.SerializerMethodField()
 
     class Meta:
         model = CourtCases
         fields = '__all__'
+
+    def get_user_name(self,court):
+        user_name = str(CustomUser.objects.get(id=court.user_id.id))
+        return user_name
     
 class NotifyTasksSerializer(serializers.ModelSerializer):
     class Meta:

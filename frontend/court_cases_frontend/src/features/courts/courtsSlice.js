@@ -14,7 +14,7 @@ export const courtsSlice = createSlice({
     },
     extraReducers(builder){
         builder.addCase(getCourts.pending, (state, actions)=>{
-            state.courts = 'loading'
+            state.status = 'loading'
         })
         .addCase(getCourts.fulfilled, (state, actions)=>{
             state.status = 'courts-succeded'
@@ -32,7 +32,7 @@ export const getCourts = createAsyncThunk('courts/getCourts', async ()=>{
     return response.data
 })
 
-export const selectCourts = (state) => state.courts
+export const selectCourts = (state) => state.courts.courts
 
 export const {  } = courtsSlice.actions
 
