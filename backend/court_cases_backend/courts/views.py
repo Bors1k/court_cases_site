@@ -58,12 +58,20 @@ def get_user_by_id(request, pk):
 @permission_classes([IsAuthenticated])
 def get_courts(request):
     user = request.user
+    
+    ordering = request.query_params.get('ordering')
+
     # _add.delay(4,4)
     if user.is_admin:
         queryset = CourtCases.objects.all()
     else:
         queryset = CourtCases.objects.filter(user_id=user.id)
 
+    if ordering is not None and ordering == 'reverse':
+        queryset = queryset.order_by('number_of_court').reverse()
+    else:
+        queryset = queryset.order_by('number_of_court')
+        
     serializer_class = CourtCasesSerializer(queryset, many=True)
 
     return Response(serializer_class.data)

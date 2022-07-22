@@ -26,7 +26,7 @@ function Header (){
             </NavDropdown>
             ):(
               <Navbar.Text>
-                          <Link to="/login">Авторизоваться</Link>
+                <Link to="/login">Авторизоваться</Link>
               </Navbar.Text>
             )
           }

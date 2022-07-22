@@ -1,18 +1,32 @@
+import { useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import { LinkContainer } from 'react-router-bootstrap'
+import CourtRow from './CourtRow'
+import { useDispatch, useSelector } from "react-redux";
+import { getCourts, selectCourts } from "../features/courts/courtsSlice";
+import { useEffect } from "react";
 
-function CourtTable ({courts}){
-    // console.log(courts)
-    // courts.map((court)=>{
-    //     console.log(court)
-    // })
-    
+function CourtTable (){
+   const [ordering, setOrdering] = useState(false)
+
+   const courts = useSelector(selectCourts)
+    const courtsStatus = useSelector(store=>store.courts.status)
+
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        if(courtsStatus=='idle'){
+            dispatch(getCourts())
+        }
+        else{
+
+        }
+    }, [dispatch, courtsStatus])
 
     return (
         <Table striped bordered hover>
             <thead>
                 <tr>
-                    <th>№ п\п</th>
+                    <th onClick={()=>setOrdering(!ordering)} style={{'cursor': 'pointer'}}>№ п\п</th>
                     <th>Куратор</th>
                     <th>Кем заявлены требования и (сумма заявленных требований)</th>
                     <th>К кому заявлены требования + (3 лицо)</th>
@@ -22,20 +36,10 @@ function CourtTable ({courts}){
                 </tr>
             </thead>
             <tbody>
-                {courts.map((court)=>{
-                    return (
-                    <LinkContainer key={court.id} to={`/courts/${court.id}`} style={{'cursor': 'pointer'}}>
-                    <tr>
-                        <td>{court.number_of_court}</td>
-                        <td>{court.user_name}</td>
-                        <td>{court.case_source_and_summ}</td>
-                        <td>{court.case_purpose}</td>
-                        <td>{court.claim}</td>
-                        <td>{court.number_case_in_first_instance}</td>
-                        <td>{court.number_case_in_numenklature}</td>
-                    </tr>
-                    </LinkContainer>)
-                })}
+                {ordering ? (courts.map((court)=>{
+                    return (<CourtRow key={court.id} court={court}></CourtRow>)
+                })): ([...courts].reverse().map((court)=>{
+                    return (<CourtRow key={court.id} court={court}></CourtRow>)}))}
             </tbody>
         </Table>
 );}

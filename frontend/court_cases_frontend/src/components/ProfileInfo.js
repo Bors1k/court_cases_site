@@ -28,6 +28,8 @@ function ProfileInfo (){
 
     const [validForm, setValidForm] = useState(false)
 
+    const [open, setOpen] = useState(false);
+
     const onRefreshProfile = ()=> dispatch(getProfileInfoAsync()) 
 
     const onUpdateProfile = () => {
@@ -122,10 +124,7 @@ function ProfileInfo (){
                         />
                     </Col>
                 </Form.Group>
-                <Button variant="primary" className='mb-3' type="button" onClick={onUpdateProfile}>
-                    Сохранить
-                </Button> 
-                
+                <Button variant="primary" className='mb-3' type="button" onClick={onUpdateProfile}>Сохранить</Button>        
             </Form>
         </>        
     );

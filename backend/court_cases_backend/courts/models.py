@@ -87,7 +87,7 @@ class CustomUser(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
-    
+        
     @property
     def is_staff(self):
         "Is the user a member of staff?"
@@ -112,32 +112,32 @@ class CourtCases(models.Model):
 
     # Первая инстанция
     fstinst_dates_of_court_hearing = models.JSONField(blank=True, null=True, verbose_name='Даты судебных заседаний')
-    fstinst_date_of_dicision = models.DateField(blank=True, null=True, verbose_name='Дата вынесения решения(только дата)')
+    fstinst_date_of_dicision = models.DateField(blank=True, null=True, default='',verbose_name='Дата вынесения решения(только дата)')
     fstinst_brief_operative_part = models.TextField(blank=True, verbose_name='Краткая резолютивная часть судебного акта')
     fstinst_minfin_information = models.CharField(max_length=255, blank=True, 
     verbose_name='Информация о направлении справки по делу в ФК или Минфин V –отправлена, дата отправления и № письма, X – не требуется')
-    fstinst_date_of_filing_in_court = models.DateField(blank=True, null=True, verbose_name='Дата направления заявления в суд на выдачу судебного акта.')
-    fstinst_date_of_receipt_of_judgment = models.DateField(blank=True, null=True, verbose_name='Дата получения судебного решения')
-    fstinst_date_appeal_by_the_parties = models.DateField(blank=True, null=True, verbose_name='Дата направления апелляционной жалобы сторонам по делу')
-    fstinst_date_appeal_to_the_court = models.DateField(blank=True, null=True, verbose_name='Дата направления апелляционной жалобы в суд')
+    fstinst_date_of_filing_in_court = models.DateField(blank=True, null=True, default='', verbose_name='Дата направления заявления в суд на выдачу судебного акта.')
+    fstinst_date_of_receipt_of_judgment = models.DateField(blank=True, null=True, default='', verbose_name='Дата получения судебного решения')
+    fstinst_date_appeal_by_the_parties = models.DateField(blank=True, null=True, default='',verbose_name='Дата направления апелляционной жалобы сторонам по делу')
+    fstinst_date_appeal_to_the_court = models.DateField(blank=True, null=True, default='',verbose_name='Дата направления апелляционной жалобы в суд')
     # Вторая инстанция
     sndinst_dates_of_court_hearing = models.JSONField(blank=True, null=True, verbose_name='Даты судебных заседаний')
-    sndinst_date_of_dicision = models.DateField(blank=True, null=True, verbose_name='Дата вынесения апелляционного определения')
+    sndinst_date_of_dicision = models.DateField(blank=True, null=True, default='', verbose_name='Дата вынесения апелляционного определения')
     sndinst_brief_operative_part = models.TextField(blank=True, verbose_name='Краткая резолютивная часть судебного акта')
     sndinst_minfin_information = models.CharField(max_length=255, blank=True, 
     verbose_name='Информация о направлении справки по делу в ФК или Минфин V –отправлена, дата отправления и № письма, Х – не требуется')
-    sndinst_date_of_filing_in_court = models.DateField(blank=True, null=True, verbose_name='Дата направления заявления в суд на выдачу судебных актов.')
-    sndinst_date_of_receipt_of_judgment = models.DateField(blank=True, null=True, verbose_name='Дата получения судебных актов вступивших в законную силу')
-    sndinst_date_appeal_by_the_parties = models.DateField(blank=True, null=True, verbose_name='Дата направления кассационной жалобы (Х - не требуется) сторонами по делу')
-    sndinst_date_appeal_to_the_court = models.DateField(blank=True, null=True, verbose_name='Дата направления кассационной жалобы (Х - не требуется) в суд')
+    sndinst_date_of_filing_in_court = models.DateField(blank=True, null=True, default='', verbose_name='Дата направления заявления в суд на выдачу судебных актов.')
+    sndinst_date_of_receipt_of_judgment = models.DateField(blank=True, null=True, default='', verbose_name='Дата получения судебных актов вступивших в законную силу')
+    sndinst_date_appeal_by_the_parties = models.DateField(blank=True, null=True, default='', verbose_name='Дата направления кассационной жалобы (Х - не требуется) сторонами по делу')
+    sndinst_date_appeal_to_the_court = models.DateField(blank=True, null=True, default='', verbose_name='Дата направления кассационной жалобы (Х - не требуется) в суд')
 
     # Третья инстанция
-    thrinst_date_of_judgment = models.DateField(blank=True, null=True, verbose_name='Дата выынесения судебного акта  или дата рассмотрения (только дата)')
+    thrinst_date_of_judgment = models.DateField(blank=True, null=True, default='', verbose_name='Дата выынесения судебного акта  или дата рассмотрения (только дата)')
     thrinst_brief_operative_part = models.TextField(blank=True, verbose_name='Краткая резолютивная часть судебного акта')
     thrinst_minfin_information = models.CharField(max_length=255, blank=True, 
     verbose_name='Информация о направлении справки по делу в ФК или Минфин V –отправлена, дата отправления и № письма, Х – не требуется')
-    thrinst_date_of_application_court_acts = models.DateField(blank=True, null=True, verbose_name='Дата направления заявления в суд на выдачу судебных актов.')
-    thrinst_date_of_receipt_acts = models.DateField(blank=True, null=True, verbose_name='Дата получения судебных актов.')
+    thrinst_date_of_application_court_acts = models.DateField(blank=True, default='', null=True, verbose_name='Дата направления заявления в суд на выдачу судебных актов.')
+    thrinst_date_of_receipt_acts = models.DateField(blank=True, null=True, default='', verbose_name='Дата получения судебных актов.')
 
     # Финал
     date_of_appeal = models.CharField(max_length=255, blank=True, 

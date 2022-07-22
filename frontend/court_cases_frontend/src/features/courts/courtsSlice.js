@@ -7,7 +7,10 @@ export const courtsSlice = createSlice({
     initialState: {
         courts: [],
         status: 'idle',
-        err: null
+        err: null,
+        filters: [
+            
+        ]
     },
     reducers: {
         
@@ -27,8 +30,15 @@ export const courtsSlice = createSlice({
     }
 })
 
-export const getCourts = createAsyncThunk('courts/getCourts', async ()=>{
-    const response = await axiosInstance.get('courts/')
+export const getCourts = createAsyncThunk('courts/getCourts', async (reverse_ordering = false)=>{
+    
+    if (reverse_ordering){
+        var url = 'courts/?ordering=reverse'
+    }
+    else{
+        var url = 'courts/'
+    }
+    const response = await axiosInstance.get(url)
     return response.data
 })
 

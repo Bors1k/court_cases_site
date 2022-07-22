@@ -10,6 +10,9 @@ function CourtsListScreen (){
 
     const courts = useSelector(selectCourts)
     const courtsStatus = useSelector(store=>store.courts.status)
+    const filters = useSelector(store=>store.courts.filters)
+
+    // const [order ]
 
     const dispatch = useDispatch()
 

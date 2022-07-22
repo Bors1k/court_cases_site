@@ -9,19 +9,28 @@ import { useEffect, useState } from 'react';
 
 function JSONdateManager ({json, setJson, name}){
 
+    if (json == undefined || json == null){
+        setJson({})
+    }
+
     const [newDate, setNewDate] = useState('')
     let last_key = 0
     
-    const onDeleteElement = (key)=>{
+    const onDeleteElement = (k)=>{
         let _dates = {...json}
-        delete _dates[key]
+        delete _dates[k]
         setJson({..._dates})
     }
 
     const onAddElement = (value)=>{
-        let _dates = {...json}
-        _dates[Number(last_key)+1] = new Date(value).toLocaleDateString('ru-RU')
-        setJson({..._dates})
+        if (newDate == ''){
+
+        }
+        else{
+            let _dates = {...json}
+            _dates[Number(last_key)+1] = new Date(value).toLocaleDateString('ru-RU')
+            setJson({..._dates})
+        }
     }
 
 
@@ -39,18 +48,16 @@ function JSONdateManager ({json, setJson, name}){
             </Col>
         </Row>
         
-        {Object.keys(json).map((key)=>{
-            last_key = key
+        {Object.keys(json).map((k)=>{
+            last_key = k
             return (
-                <>
-                <Row key={key} style={{'marginBottom': '5px'}}>
+                <Row key={k} style={{'marginBottom': '5px'}}>
                     <Col>
                         <Card>
-                            <Card.Body>{json[key]} <Button variant="danger" style={{'float': 'right'}} onClick={()=>onDeleteElement(key)}>Удалить</Button></Card.Body>
+                            <Card.Body>{json[k]} <Button variant="danger" style={{'float': 'right'}} onClick={()=>onDeleteElement(k)}>Удалить</Button></Card.Body>
                         </Card>
                     </Col>
                 </Row>
-                </>
             )
         })}
         </>

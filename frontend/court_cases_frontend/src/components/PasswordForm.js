@@ -6,7 +6,7 @@ import Alert from 'react-bootstrap/Alert';
 import { updatePassword } from '../features/user/userSlice'; 
 import { useSelector, useDispatch } from 'react-redux'
 
-function PasswordForm({children}) {
+function PasswordForm() {
 
     const [open, setOpen] = useState(false);
     const [firstPassword, setFirstPassword] = useState('');
@@ -68,7 +68,7 @@ function PasswordForm({children}) {
         {incorrRequest ? <Alert variant='danger'>
                     Поля с паролями заполнены неверно.
                 </Alert>: <></>}
-        <Button
+                <Button
         onClick={() => {setOpen(!open); setIncorrRequest(false)}}
         aria-controls="example-collapse-text"
         aria-expanded={open}
