@@ -1,12 +1,12 @@
-import CourtTable from "../components/CourtTable";
+import CourtTable from "../CourtsTable/CourtTable";
 import { useDispatch, useSelector } from "react-redux";
-import { getCourts, selectCourts } from "../features/courts/courtsSlice";
+import { getCourts, selectCourts } from "../courtsSlice";
 import { useEffect } from "react";
-import LoadingSpinner from '../components/LoadingSpinner'
-import FormContainer from "../components/FormContainer";
+import LoadingSpinner from '../../LoadingSpinner'
+import FormContainer from "../../FormContainer";
 import { useNavigate, useParams } from "react-router-dom";
-import CourtForm from "../components/CourtForm";
-import AlertMessage from '../components/AlertMessage'
+import CourtForm from "./CourtForm";
+import AlertMessage from '../../AlertMessage'
 
 function CourtScreen (){
 

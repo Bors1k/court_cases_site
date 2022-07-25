@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from './components/Header';
+import Header from './features/Header';
 import { Routes, Route, Link , useLocation, useNavigate} from "react-router-dom";
-import LoginScreen from './screens/LoginScreen';
-import CourtsListScreen from './screens/CourtsListScreen'
-import ProfileScreen from './screens/ProfileScreen'
-import HomeScreen from './screens/HomeScreen';
+import LoginScreen from './features/user/LoginScreen';
+import CourtsListScreen from './features/courts/CourtsTable/CourtsListScreen'
+import ProfileScreen from './features/user/ProfileScreen'
+import HomeScreen from './features/home/HomeScreen';
 import { useSelector, useDispatch} from 'react-redux'
 import { signout } from './features/auth/authSlice'
 import { clearUser } from './features/user/userSlice'
-import CourtScreen from './screens/CourtScreen';
-import CreateCourtScreen from './screens/CreateCourtScreen';
+import CourtScreen from './features/courts/CourtPage/CourtScreen';
+import CreateCourtScreen from './features/courts/CreateCourtPage/CreateCourtScreen';
 
 function App() {
   let location = useLocation();

@@ -4,10 +4,10 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useDispatch } from 'react-redux';
-import DateInput from './DateInput';
-import JSONdateManager from './JSONdateManager'
-import TextInput from './TextInput';
-import { updateCourt } from "../features/courts/courtsSlice";
+import DateInput from '../DateInput';
+import JSONdateManager from '../JSONdateManager'
+import TextInput from '../TextInput';
+import { updateCourt } from "../courtsSlice";
 
 function CourtForm ({court}){
 

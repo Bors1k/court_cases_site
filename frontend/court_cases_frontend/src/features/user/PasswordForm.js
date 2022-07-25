@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
-import { updatePassword } from '../features/user/userSlice'; 
+import { updatePassword } from './userSlice'; 
 import { useSelector, useDispatch } from 'react-redux'
 
 function PasswordForm() {
@@ -19,7 +19,6 @@ function PasswordForm() {
     const dispatch = useDispatch()
     
     const userStatus = useSelector(state => state.user.status)
-    const userErrorMessage = useSelector(state=>state.user.error)
 
     const onSavePassword = ()=>{
         if (!firstPasswordInvalid && !secondPasswordInvalid){

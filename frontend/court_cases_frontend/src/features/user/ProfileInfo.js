@@ -2,11 +2,11 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import AlertButton from '../components/AlertButton'
+import AlertButton from '../AlertButton'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getProfileInfoAsync, selectUser, updateProfile } from '../features/user/userSlice'
-import { setfio } from '../features/auth/authSlice'
+import { getProfileInfoAsync, selectUser, updateProfile } from './userSlice'
+import { setfio } from '../auth/authSlice'
 
 
 function ProfileInfo (){

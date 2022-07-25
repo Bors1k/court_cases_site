@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import axiosInstance from '../../services/axios/index'
+import axiosInstance from '../services/axios/index'
 import Cookies from "js-cookie";
 
 export const authSlice = createSlice({

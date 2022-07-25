@@ -1,4 +1,4 @@
-import CourtTable from "../components/CourtTable";
+import CourtTable from "../courts/CourtsTable/CourtTable";
 import { Container } from "react-bootstrap";
 
 function HomeScreen (){

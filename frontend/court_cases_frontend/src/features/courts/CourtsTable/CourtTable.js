@@ -2,24 +2,17 @@ import { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import CourtRow from './CourtRow'
 import { useDispatch, useSelector } from "react-redux";
-import { getCourts, selectCourts } from "../features/courts/courtsSlice";
 import { useEffect } from "react";
 
-function CourtTable (){
+function CourtTable ({courts}){
    const [ordering, setOrdering] = useState(false)
 
-   const courts = useSelector(selectCourts)
-    const courtsStatus = useSelector(store=>store.courts.status)
+   const courtsStatus = useSelector(store=>store.courts.status)
 
     const dispatch = useDispatch()
 
     useEffect(()=>{
-        if(courtsStatus=='idle'){
-            dispatch(getCourts())
-        }
-        else{
-
-        }
+    
     }, [dispatch, courtsStatus])
 
     return (

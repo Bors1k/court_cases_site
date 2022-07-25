@@ -1,7 +1,7 @@
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../FormContainer";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import {signin, signinAsync} from '../features/auth/authSlice'
+import {signin, signinAsync} from '../auth/authSlice'
 import axiosInstance from '../services/axios/index'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch} from 'react-redux'

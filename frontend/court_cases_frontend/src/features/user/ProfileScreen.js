@@ -1,7 +1,7 @@
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../FormContainer";
 import React from 'react'
-import PasswordForm from '../components/PasswordForm';
-import ProfileInfo from '../components/ProfileInfo';
+import PasswordForm from './PasswordForm';
+import ProfileInfo from './ProfileInfo';
 
 
 function ProfileScreen (){

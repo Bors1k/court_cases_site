@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axiosInstance from '../../services/axios/index'
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
+import axiosInstance from '../services/axios/index'
 
 
 export const courtsSlice = createSlice({
@@ -7,10 +7,7 @@ export const courtsSlice = createSlice({
     initialState: {
         courts: [],
         status: 'idle',
-        err: null,
-        filters: [
-            
-        ]
+        err: null
     },
     reducers: {
         
@@ -32,7 +29,6 @@ export const courtsSlice = createSlice({
         })
         .addCase(updateCourt.fulfilled, (state, actions)=>{
             state.status = 'update-succeded'
-            console.log(actions.payload)
         })
         .addCase(updateCourt.rejected, (state, actions)=>{
             state.status = 'error'
@@ -43,6 +39,7 @@ export const courtsSlice = createSlice({
         })
         .addCase(createCourt.fulfilled, (state, actions)=>{
             state.status = 'court-created'
+            state.courts.push(actions.payload)
         })
         .addCase(createCourt.rejected, (state, actions)=>{
             state.status = 'error'
@@ -76,7 +73,26 @@ export const createCourt = createAsyncThunk('courts/create', async (court)=>{
     return response.data
 })
 
+
 export const selectCourts = (state) => state.courts.courts
+
+export const selectFilteredCourts = createSelector(
+    selectCourts,
+    (state)=>state.filter.filters,
+    (courts, filters)=>{
+        if (filters == null || filters==''){
+            return courts
+        }
+        return courts.filter((court)=>{
+            for (const key in court) {
+                if(`${court[key]}`.toLowerCase().includes(`${filters}`.toLowerCase())){
+                    return true
+                }
+            }
+            return false
+        })
+    }
+)
 
 export const {  } = courtsSlice.actions
 

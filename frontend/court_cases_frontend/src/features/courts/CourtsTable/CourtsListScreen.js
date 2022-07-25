@@ -1,18 +1,16 @@
-import CourtTable from "../components/CourtTable";
-import { Container } from "react-bootstrap";
+import CourtTable from "./CourtTable";
 import { useDispatch, useSelector } from "react-redux";
-import { getCourts, selectCourts } from "../features/courts/courtsSlice";
+import { getCourts, selectFilteredCourts } from "../courtsSlice";
 import { useEffect } from "react";
-import LoadingSpinner from '../components/LoadingSpinner'
-import FormContainer from "../components/FormContainer";
+import LoadingSpinner from '../../LoadingSpinner'
+import FormContainer from "../../FormContainer";
+import CourtTableFilters from "./CourtTableFilters";
 
 function CourtsListScreen (){
 
-    const courts = useSelector(selectCourts)
+    const courts = useSelector(selectFilteredCourts)
     const courtsStatus = useSelector(store=>store.courts.status)
-    const filters = useSelector(store=>store.courts.filters)
-
-    // const [order ]
+    const filters = useSelector(store=>store.filter.filters)
 
     const dispatch = useDispatch()
 
@@ -20,13 +18,11 @@ function CourtsListScreen (){
         if(courtsStatus=='idle'){
             dispatch(getCourts())
         }
-        else{
-
-        }
-    }, [dispatch, courtsStatus])
+    }, [dispatch, courtsStatus, filters, courts])
 
     return (
         <FormContainer>
+            <CourtTableFilters filters={filters}></CourtTableFilters>
             {courtsStatus == 'loading' || courtsStatus == 'idle' ? <LoadingSpinner></LoadingSpinner> : <CourtTable courts={courts}/>}
         </FormContainer>
     );

@@ -5,10 +5,6 @@ import Row from 'react-bootstrap/Row';
 
 export default function DateInput({value, setValue ,label, readOnly = false}) {
 
-    // if (value == ''){
-    //     setValue(null)
-    // }
-
     const onSetValue = (e)=>{
         setValue(e.target.value)
     }
