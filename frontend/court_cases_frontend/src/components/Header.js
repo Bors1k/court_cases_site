@@ -14,7 +14,8 @@ function Header (){
         <Navbar.Brand><Link to="/" className='Link'>Реестр юридических дел</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Nav className="me-auto">
-            <Nav.Item><Link to="/courts" className='Link'>Список дел</Link></Nav.Item>
+            <Nav.Link as={Link} to='/courts'>Таблица дел</Nav.Link>
+            <Nav.Link as={Link} to='/courts/create-court'>Создать дело</Nav.Link>
           </Nav>
           <Navbar.Collapse className='justify-content-end'>
             {userLogin.fio ? (

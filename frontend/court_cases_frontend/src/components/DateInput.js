@@ -5,6 +5,10 @@ import Row from 'react-bootstrap/Row';
 
 export default function DateInput({value, setValue ,label, readOnly = false}) {
 
+    // if (value == ''){
+    //     setValue(null)
+    // }
+
     const onSetValue = (e)=>{
         setValue(e.target.value)
     }
@@ -16,7 +20,7 @@ export default function DateInput({value, setValue ,label, readOnly = false}) {
         </Form.Label>
         <Row>
             <Col xs="auto">
-                <Form.Control type="date" placeholder="" readOnly={readOnly} value={value} onChange={onSetValue}/>
+                <Form.Control type="date" placeholder="" readOnly={readOnly} value={value == null ? '' : value} onChange={onSetValue}/>
             </Col>   
         </Row>
     </Form.Group>

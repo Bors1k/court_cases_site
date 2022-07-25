@@ -2,13 +2,15 @@ import React from 'react'
 import Form from 'react-bootstrap/Form';
 
 
-export default function TextInput({value, setValue ,label, readOnly = false}) {
+export default function TextInput({value, setValue ,label, readOnly = false, isValid=false, required=false, type= 'text'}) {
   return (
     <Form.Group className="mb-3" controlId={value}>
-                <Form.Label>
+                {required? <Form.Label style={{'fontWeight': 'bold'}}>
                     {label}
-                </Form.Label>
-                <Form.Control type="text" placeholder="" readOnly={readOnly} value={value} onChange={(e)=>setValue(e.target.value)}/>
+                </Form.Label>: <Form.Label>
+                    {label}
+                </Form.Label>}
+                <Form.Control type={type} placeholder="" readOnly={readOnly} isValid={isValid} required={required} value={value} onChange={(e)=>setValue(e.target.value)}/>
     </Form.Group>
   )
 }

@@ -10,6 +10,7 @@ import { useSelector, useDispatch} from 'react-redux'
 import { signout } from './features/auth/authSlice'
 import { clearUser } from './features/user/userSlice'
 import CourtScreen from './screens/CourtScreen';
+import CreateCourtScreen from './screens/CreateCourtScreen';
 
 function App() {
   let location = useLocation();
@@ -35,6 +36,7 @@ function App() {
           <Route path="/login" element={<LoginScreen/>}/>
           <Route path="/profile" element={<ProfileScreen/>}/>
           <Route path="/courts/:court_id" element={<CourtScreen/>}/>
+          <Route path="/courts/create-court" element={<CreateCourtScreen/>}/>
         </Routes>
       </div>
     );

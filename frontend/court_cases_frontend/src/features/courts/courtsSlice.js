@@ -27,6 +27,27 @@ export const courtsSlice = createSlice({
             state.status = 'error'
             state.err = actions.error.message
         })
+        builder.addCase(updateCourt.pending, (state, actions)=>{
+            state.status = 'updating'
+        })
+        .addCase(updateCourt.fulfilled, (state, actions)=>{
+            state.status = 'update-succeded'
+            console.log(actions.payload)
+        })
+        .addCase(updateCourt.rejected, (state, actions)=>{
+            state.status = 'error'
+            state.err = actions.error.message
+        })
+        builder.addCase(createCourt.pending, (state, actions)=>{
+            state.status = 'creating-court'
+        })
+        .addCase(createCourt.fulfilled, (state, actions)=>{
+            state.status = 'court-created'
+        })
+        .addCase(createCourt.rejected, (state, actions)=>{
+            state.status = 'error'
+            state.err = actions.error.message
+        })
     }
 })
 
@@ -39,6 +60,19 @@ export const getCourts = createAsyncThunk('courts/getCourts', async (reverse_ord
         var url = 'courts/'
     }
     const response = await axiosInstance.get(url)
+    return response.data
+})
+
+export const updateCourt = createAsyncThunk('courts/update', async (court)=>{
+    const response = await axiosInstance.put(`courts/${court.id}/update/`, court)
+
+    return response.data
+
+})
+
+export const createCourt = createAsyncThunk('courts/create', async (court)=>{
+    const response = await axiosInstance.post(`courts/create/`, court)
+
     return response.data
 })
 

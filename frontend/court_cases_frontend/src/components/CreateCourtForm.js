@@ -7,62 +7,55 @@ import { useDispatch } from 'react-redux';
 import DateInput from './DateInput';
 import JSONdateManager from './JSONdateManager'
 import TextInput from './TextInput';
-import { updateCourt } from "../features/courts/courtsSlice";
+import { createCourt } from "../features/courts/courtsSlice";
 
-function CourtForm ({court}){
+function CreateCourtForm ({user_fio}){
 
     const dispatch = useDispatch()
 
-    const [number_of_court, setNumber_of_court] = useState(court.number_of_court)
-    const [case_source_and_summ, setCase_source_and_summ] = useState(court.case_source_and_summ)
-    const [case_purpose, setCase_purpose] = useState(court.case_purpose)
-    const [claim, setClaim] = useState(court.claim)
-    const [number_case_in_first_instance, setNumber_case_in_first_instance] = useState(court.number_case_in_first_instance)
-    const [number_case_in_numenklature, setNumber_case_in_numenklature] = useState(court.number_case_in_numenklature)
+    const [number_of_court, setNumber_of_court] = useState('')
+    const [case_source_and_summ, setCase_source_and_summ] = useState('')
+    const [case_purpose, setCase_purpose] = useState('')
+    const [claim, setClaim] = useState('')
+    const [number_case_in_first_instance, setNumber_case_in_first_instance] = useState('')
+    const [number_case_in_numenklature, setNumber_case_in_numenklature] = useState('')
     
-    const [fstinst_dates_of_court_hearing, setFstinst_dates_of_court_hearing] = useState(court.fstinst_dates_of_court_hearing)
-    if (fstinst_dates_of_court_hearing == undefined || fstinst_dates_of_court_hearing == null){
-        setFstinst_dates_of_court_hearing({})
-    }
-    const [fstinst_date_of_dicision, setFstinst_date_of_dicision] = useState(court.fstinst_date_of_dicision)
-    const [fstinst_brief_operative_part, setFstinst_brief_operative_part] = useState(court.fstinst_brief_operative_part)
-    const [fstinst_minfin_information, setFstinst_minfin_information] = useState(court.fstinst_minfin_information)
-    const [fstinst_date_of_filing_in_court, setFstinst_date_of_filing_in_court] = useState(court.fstinst_date_of_filing_in_court)
-    const [fstinst_date_of_receipt_of_judgment, setFstinst_date_of_receipt_of_judgment] = useState(court.fstinst_date_of_receipt_of_judgment)
-    const [fstinst_date_appeal_by_the_parties, setFstinst_date_appeal_by_the_parties] = useState(court.fstinst_date_appeal_by_the_parties)
-    const [fstinst_date_appeal_to_the_court, setFstinst_date_appeal_to_the_court] = useState(court.fstinst_date_appeal_to_the_court)
+    const [fstinst_dates_of_court_hearing, setFstinst_dates_of_court_hearing] = useState({})
+    const [fstinst_date_of_dicision, setFstinst_date_of_dicision] = useState(null)
+    const [fstinst_brief_operative_part, setFstinst_brief_operative_part] = useState('')
+    const [fstinst_minfin_information, setFstinst_minfin_information] = useState('')
+    const [fstinst_date_of_filing_in_court, setFstinst_date_of_filing_in_court] = useState(null)
+    const [fstinst_date_of_receipt_of_judgment, setFstinst_date_of_receipt_of_judgment] = useState(null)
+    const [fstinst_date_appeal_by_the_parties, setFstinst_date_appeal_by_the_parties] = useState(null)
+    const [fstinst_date_appeal_to_the_court, setFstinst_date_appeal_to_the_court] = useState(null)
 
     
-    const [sndinst_dates_of_court_hearing, setSndinst_dates_of_court_hearing] = useState(court.sndinst_dates_of_court_hearing)
-    if (sndinst_dates_of_court_hearing == undefined || sndinst_dates_of_court_hearing == null){
-        setSndinst_dates_of_court_hearing({})
-    }
-    const [sndinst_date_of_dicision, setSndinst_date_of_dicision] = useState(court.sndinst_date_of_dicision)
-    const [sndinst_brief_operative_part, setSndinst_brief_operative_part] = useState(court.sndinst_brief_operative_part)
-    const [sndinst_minfin_information, setSndinst_minfin_information] = useState(court.sndinst_minfin_information)
-    const [sndinst_date_of_filing_in_court, setSndinst_date_of_filing_in_court] = useState(court.sndinst_date_of_filing_in_court)
-    const [sndinst_date_of_receipt_of_judgment, setSndinst_date_of_receipt_of_judgment] = useState(court.sndinst_date_of_receipt_of_judgment)
-    const [sndinst_date_appeal_by_the_parties, setSndinst_date_appeal_by_the_parties] = useState(court.sndinst_date_appeal_by_the_parties)
-    const [sndinst_date_appeal_to_the_court, setSndinst_date_appeal_to_the_court] = useState(court.sndinst_date_appeal_to_the_court)
+    const [sndinst_dates_of_court_hearing, setSndinst_dates_of_court_hearing] = useState({})
+    const [sndinst_date_of_dicision, setSndinst_date_of_dicision] = useState(null)
+    const [sndinst_brief_operative_part, setSndinst_brief_operative_part] = useState('')
+    const [sndinst_minfin_information, setSndinst_minfin_information] = useState('')
+    const [sndinst_date_of_filing_in_court, setSndinst_date_of_filing_in_court] = useState(null)
+    const [sndinst_date_of_receipt_of_judgment, setSndinst_date_of_receipt_of_judgment] = useState(null)
+    const [sndinst_date_appeal_by_the_parties, setSndinst_date_appeal_by_the_parties] = useState(null)
+    const [sndinst_date_appeal_to_the_court, setSndinst_date_appeal_to_the_court] = useState(null)
     
 
-    const [thrinst_date_of_judgment, setThrinst_date_of_judgment] = useState(court.thrinst_date_of_judgment)
-    const [thrinst_brief_operative_part, setThrinst_brief_operative_part] = useState(court.thrinst_brief_operative_part)
-    const [thrinst_minfin_information, setThrinst_minfin_information] = useState(court.thrinst_minfin_information)
-    const [thrinst_date_of_application_court_acts, setThrinst_date_of_application_court_acts] = useState(court.thrinst_date_of_application_court_acts)
-    const [thrinst_date_of_receipt_acts, setThrinst_date_of_receipt_acts] = useState(court.thrinst_date_of_receipt_acts)
+    const [thrinst_date_of_judgment, setThrinst_date_of_judgment] = useState(null)
+    const [thrinst_brief_operative_part, setThrinst_brief_operative_part] = useState('')
+    const [thrinst_minfin_information, setThrinst_minfin_information] = useState('')
+    const [thrinst_date_of_application_court_acts, setThrinst_date_of_application_court_acts] = useState(null)
+    const [thrinst_date_of_receipt_acts, setThrinst_date_of_receipt_acts] = useState(null)
 
 
-    const [date_of_appeal, setDate_of_appeal] = useState(court.date_of_appeal)
-    const [date_of_submission_appeal, setDate_of_submission_appeal] = useState(court.date_of_submission_appeal)
-    const [total_amount_recovered, setTotal_amount_recovered] = useState(court.sndinst_minfin_information)
-    const [information_about_need_recourse, setInformation_about_need_recourse] = useState(court.information_about_need_recourse)
-    const [summary_of_court, setSummary_of_court] = useState(court.summary_of_court)
+    const [date_of_appeal, setDate_of_appeal] = useState('')
+    const [date_of_submission_appeal, setDate_of_submission_appeal] = useState('')
+    const [total_amount_recovered, setTotal_amount_recovered] = useState('')
+    const [information_about_need_recourse, setInformation_about_need_recourse] = useState('')
+    const [summary_of_court, setSummary_of_court] = useState('')
 
-    const onSaveChanges = (e)=>{
+    const onCreateCourt = (e)=>{
         e.preventDefault()
-        const court_update = {
-            id: court.id,
+        const court_create = {
             number_of_court,
             case_source_and_summ,
             case_purpose,
@@ -101,18 +94,18 @@ function CourtForm ({court}){
             summary_of_court
         }
 
-        dispatch(updateCourt(court_update))
+        dispatch(createCourt(court_create))
     }
 
     return (
-        <Form onSubmit={onSaveChanges}>
+        <Form onSubmit={onCreateCourt}>
             <Row>
                 <Col>
                     <h4 style={{'textAlign': 'center'}}>Начало дела</h4>
                 </Col>
             </Row>
-            <TextInput required type='number' value={number_of_court} setValue={setNumber_of_court} label='Номер дела' />
-            <TextInput required value={court.user_name} label='Куратор' readOnly/>
+            <TextInput type='number' value={number_of_court} setValue={setNumber_of_court} label='Номер дела'/>
+            <TextInput required value={user_fio} label='Куратор' readOnly/>
             <TextInput required value={case_source_and_summ} setValue={setCase_source_and_summ} 
             label='Кем заявлены требования и (сумма заявленных требований):' />
             <TextInput required value={case_purpose} setValue={setCase_purpose} label='К кому заявлены требования + (3 лицо)' />
@@ -217,4 +210,4 @@ function CourtForm ({court}){
         </Form>
 );}
  
-export default CourtForm;
+export default CreateCourtForm;

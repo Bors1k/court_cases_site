@@ -162,7 +162,7 @@ def create_court(request):
     data = request.data
 
     print({**data, "user_id":user.id})
-
+    
     court = CourtCases.objects.create(**{**data, "user_id":user})
 
     create_task.delay(court.id)
