@@ -10,7 +10,11 @@ export const courtsSlice = createSlice({
         err: null
     },
     reducers: {
-        
+        clearCourtState: (state) => {
+            state.courts = []
+            state.status = 'idle'
+            state.err = null
+        } 
     },
     extraReducers(builder){
         builder.addCase(getCourts.pending, (state, actions)=>{
@@ -19,6 +23,7 @@ export const courtsSlice = createSlice({
         .addCase(getCourts.fulfilled, (state, actions)=>{
             state.status = 'courts-succeded'
             state.courts = actions.payload
+            state.err = null
         })
         .addCase(getCourts.rejected, (state, actions)=>{
             state.status = 'error'
@@ -29,6 +34,7 @@ export const courtsSlice = createSlice({
         })
         .addCase(updateCourt.fulfilled, (state, actions)=>{
             state.status = 'update-succeded'
+            state.err = null
         })
         .addCase(updateCourt.rejected, (state, actions)=>{
             state.status = 'error'
@@ -40,6 +46,7 @@ export const courtsSlice = createSlice({
         .addCase(createCourt.fulfilled, (state, actions)=>{
             state.status = 'court-created'
             state.courts.push(actions.payload)
+            state.err = null
         })
         .addCase(createCourt.rejected, (state, actions)=>{
             state.status = 'error'
@@ -94,6 +101,6 @@ export const selectFilteredCourts = createSelector(
     }
 )
 
-export const {  } = courtsSlice.actions
+export const { clearCourtState } = courtsSlice.actions
 
 export default courtsSlice.reducer

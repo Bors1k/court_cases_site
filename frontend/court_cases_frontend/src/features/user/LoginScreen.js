@@ -7,9 +7,12 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { useNavigate, Link } from 'react-router-dom'
 import { Container } from "react-bootstrap";
+import AlertMessage from "../AlertMessage";
 
 function LoginScreen() {
     const userLogin = useSelector((state)=>state.auth)
+    // const userLoginError = useSelector(state=>state.auth.erorr)
+    
     let navigate = useNavigate();
     
 
@@ -24,16 +27,18 @@ function LoginScreen() {
     }
 
     useEffect(()=>{
-    })
+    
+    }, [userLogin.error,])
 
     return (
         <Container>
+            { userLogin.error != null ? <AlertMessage title={'Ошибка авторизации'} text={userLogin.error}/> : <></>}
             { !userLogin.token ? (
                 <FormContainer>
                     <Form  onSubmit={onSignIn}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email адрес</Form.Label>
-                            <Form.Control type="email" placeholder="Введите email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                            <Form.Control required type="email" placeholder="Введите email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
                             <Form.Text className="text-muted">
                             Та почта, которая ФамилияИО@fsfk.local
                             </Form.Text>
@@ -41,7 +46,7 @@ function LoginScreen() {
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Пароль</Form.Label>
-                            <Form.Control type="password" placeholder="Введите пароль" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                            <Form.Control required type="password" placeholder="Введите пароль" value={password} onChange={(e)=>setPassword(e.target.value)}/>
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Войти

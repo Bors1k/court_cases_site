@@ -12,6 +12,7 @@ import AlertMessage from '../../AlertMessage'
 export default function CreateCourtScreen() {
 
     const user_fio = useSelector(store=>store.auth.fio)
+    const token = useSelector(store=>store.auth.token)
     const courtsStatus = useSelector(store=>store.courts.status)
     const errorMessage = useSelector(store=>store.courts.err)
 
@@ -23,7 +24,13 @@ export default function CreateCourtScreen() {
         if(courtsStatus == 'court-created'){
             navigate('/courts/')
         }
-    }, [courtsStatus, dispatch])
+        if(token == null || undefined){
+          navigate('/login')
+      }
+        if(errorMessage == 'Request failed with status code 403' && token){
+          
+        }
+    }, [courtsStatus, dispatch, token])
 
   return (
     <FormContainer>
