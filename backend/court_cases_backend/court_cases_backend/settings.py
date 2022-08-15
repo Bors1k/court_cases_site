@@ -163,8 +163,8 @@ AUTH_USER_MODEL = 'courts.CustomUser'
 DATE_INPUT_FORMATS = ['%d.%m.%Y'] # бесполезная фигня, я не понимаю почему, но это не работает
 
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = '8916misha@gmail.com'
-EMAIL_HOST_PASSWORD = 'kfzxbmfmjowtncri'
+EMAIL_HOST = password.EMAIL_HOST
+EMAIL_USE_TLS = password.EMAIL_USE_TLS
+EMAIL_PORT = password.EMAIL_PORT
+EMAIL_HOST_USER = password.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = password.EMAIL_HOST_PASSWORD
