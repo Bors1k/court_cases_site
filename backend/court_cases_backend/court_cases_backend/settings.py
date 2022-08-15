@@ -161,3 +161,10 @@ AUTH_USER_MODEL = 'courts.CustomUser'
 # Должно помогать в изменение формата даты при вводе пользователем, но оно игнорируется, 
 # что просто, что если использовать в сериализаторе
 DATE_INPUT_FORMATS = ['%d.%m.%Y'] # бесполезная фигня, я не понимаю почему, но это не работает
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '8916misha@gmail.com'
+EMAIL_HOST_PASSWORD = 'kfzxbmfmjowtncri'

@@ -12,23 +12,26 @@ export default function CourtNotifies({court_id}) {
     const notifies = useSelector(store=>store.notify.notifies)
 
     useEffect(()=>{
-      if(notifyStatus == 'idle'){
+      if(notifyStatus == 'idle' && (userAttributes.is_admin || userAttributes.is_chief)){
         dispatch(getNotifiesForCourt(court_id))
       }
     }, [dispatch,notifyStatus])
 
   return (<>
-    <h4 style={{'textAlign': 'center'}}>Уведомления (Видят только админы и начальники)</h4>
    {
-        userAttributes.is_chief || useuserAttributesr.is_admin ? 
-        (
-          <FormContainer>
+     userAttributes.is_chief || userAttributes.is_admin ? 
+     (
+      <>
+            <h4 style={{'textAlign': 'center'}}>Уведомления (Видят только админы и начальники)</h4>
+        <FormContainer>
             {notifyStatus == 'loading' || notifyStatus == 'idle' 
             ? <LoadingSpinner></LoadingSpinner> 
             : notifies.length != 0 
             ? <NotifiesTable notifies={notifies}/> 
             : <h6 style={{'textAlign': 'center'}}>Нет уведомлений</h6>}
           </FormContainer>
+          <hr></hr>
+          </>
         )
         :<></>
     }

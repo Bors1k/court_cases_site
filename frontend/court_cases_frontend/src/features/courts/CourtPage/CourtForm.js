@@ -113,7 +113,6 @@ function CourtForm ({court}){
         <Form onSubmit={onSaveChanges}>
             <Row>
                 <Col>
-                    <hr></hr>
                     <h4 style={{'textAlign': 'center'}}>Начало дела</h4>
                 </Col>
             </Row>

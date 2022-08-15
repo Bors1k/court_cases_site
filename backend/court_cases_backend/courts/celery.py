@@ -10,8 +10,8 @@ app = Celery('tasks', broker='redis://localhost')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    'check-tasks-every-single-minute': {
+    'check-tasks-every-minut': {
         'task': 'courts.tasks.check_tasks',
-        'schedule': crontab()
-    }
+        'schedule': crontab(), #crontab(hour=9, minute=30, day_of_week=1)
+    },
 }

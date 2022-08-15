@@ -7,8 +7,8 @@ export const authSlice = createSlice({
     initialState: {
         token: Cookies.get('auth-token'),
         fio: Cookies.get('fio'),
-        is_admin: Cookies.get('is_admin'),
-        is_chief: Cookies.get('is_chief'),
+        is_admin: Cookies.get('is_admin') == 'false' ? false: true,
+        is_chief: Cookies.get('is_chief')== 'false' ? false: true,
         error: null
     },
     reducers: {
