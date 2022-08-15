@@ -96,6 +96,22 @@ def get_notifies_for_court(request, pk):
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
+def get_notifies(request):
+    user = request.user
+    
+    if user.is_admin:
+        queryset = NotifyTask.objects.all()
+    else:
+        content = {'detail': 'You have no permissions to this court'}
+        return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
+    serializer_class = NotifyTasksSerializer(queryset, many=True)
+
+    return Response(serializer_class.data)
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, BasicAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_court_details(request, pk):
     user = request.user
 

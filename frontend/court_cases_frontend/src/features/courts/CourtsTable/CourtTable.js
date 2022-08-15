@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 function CourtTable ({courts}){
-   const [ordering, setOrdering] = useState(false)
+    const [ordering, setOrdering] = useState(false)
 
-   const courtsStatus = useSelector(store=>store.courts.status)
+    const courtsStatus = useSelector(store=>store.courts.status)
 
     const dispatch = useDispatch()
 

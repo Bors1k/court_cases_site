@@ -17,7 +17,7 @@ def validate_fstinst_dates_of_court_hearing(court: CourtCases):
         if old_date is True and court.fstinst_date_of_dicision is None:
             print('Создаем задачу')
             task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
-            task.notify_message = f"Не заполнена графа первой инстрации 'Дата вынесения решения(только дата)' в деле №{court.number_of_court}, куратора {court.user_id}"
+            task.notify_message = f"Не заполнена графа первой инстанции 'Дата вынесения решения(только дата)' в деле №{court.number_of_court}, куратора {court.user_id}"
             task.date_of_notify = notify_date
             task.count_update_day = 1
             task.max_count_before_chief_notify = 3
@@ -35,7 +35,7 @@ def validate_fstinst_dates_of_court_hearing(court: CourtCases):
             else:
                 print('task created')
                 task = get_task_for_validator(court=court,need_create=True, column_name=column_name)
-                task.notify_message = f"Не заполнены графы первой инстрации 'Дата направления заявления в суд на выдачу судебного акта.' или 'Дата получения судебного решения' в деле №{court.number_of_court}, куратора {court.user_id}"
+                task.notify_message = f"Не заполнены графы первой инстанции 'Дата направления заявления в суд на выдачу судебного акта.' или 'Дата получения судебного решения' в деле №{court.number_of_court}, куратора {court.user_id}"
                 task.date_of_notify = notify_date
                 task.count_update_day = 10
                 task.max_count_before_chief_notify = 2
@@ -52,7 +52,7 @@ def validate_fstinst_dates_of_court_hearing(court: CourtCases):
     else: 
         print('Создаем задачу')
         task = get_task_for_validator(court=court,need_create=True, column_name=column_name)
-        task.notify_message = f"Не заполнена графа первой инстрации 'Даты судебных заседаний' в деле №{court.number_of_court}, куратора {court.user_id}"
+        task.notify_message = f"Не заполнена графа первой инстанции 'Даты судебных заседаний' в деле №{court.number_of_court}, куратора {court.user_id}"
         task.date_of_notify = datetime.date(datetime.now()) + timedelta(days=10)
         task.count_update_day = 10
         task.max_count_before_chief_notify = 2
@@ -67,7 +67,7 @@ def validate_fstinst_date_of_dicision(court: CourtCases):
     if court.fstinst_date_of_dicision is not None and str(court.fstinst_brief_operative_part).lower().__contains__('взыскать с') is False:
         print('Создаем задачу')
         task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
-        task.notify_message = f"Не заполнена графа первой инстрации 'Краткая резолютивная часть судебного акта' в деле №{court.number_of_court}, куратора {court.user_id}"
+        task.notify_message = f"Не заполнена графа первой инстанции 'Краткая резолютивная часть судебного акта' в деле №{court.number_of_court}, куратора {court.user_id}"
         task.date_of_notify = datetime.date(datetime.now())
         task.count_update_day = 1
         task.max_count_before_chief_notify = 15
@@ -79,7 +79,7 @@ def validate_fstinst_date_of_dicision(court: CourtCases):
     and (court.fstinst_date_appeal_by_the_parties is None or court.fstinst_date_appeal_to_the_court is None):
         print('Создаем задачу')
         task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
-        task.notify_message = f"Не заполнены графы первой инстрации 'Дата направления апелляционной жалобы сторонам по делу' или 'Дата направления апелляционной жалобы в суд' в деле №{court.number_of_court}, куратора {court.user_id}"
+        task.notify_message = f"Не заполнены графы первой инстанции 'Дата направления апелляционной жалобы сторонам по делу' или 'Дата направления апелляционной жалобы в суд' в деле №{court.number_of_court}, куратора {court.user_id}"
         task.date_of_notify = datetime.date(datetime.now()) + timedelta(days=15)
         task.count_update_day = 1
         task.max_count_before_chief_notify = 14
@@ -101,7 +101,7 @@ def validate_fstinst_minfin_information(court: CourtCases):
         if str(court.fstinst_minfin_information).lower() != 'x' and date_regex.findall(str(court.fstinst_minfin_information)).__len__() == 0:
             print('Создаем задачу')
             task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
-            task.notify_message = f"Не заполнена графа первой инстрации 'Информация о направлении справки по делу в ФК или Минфин' в деле №{court.number_of_court}, куратора {court.user_id}"
+            task.notify_message = f"Не заполнена графа первой инстанции 'Информация о направлении справки по делу в ФК или Минфин' в деле №{court.number_of_court}, куратора {court.user_id}"
             task.date_of_notify = datetime.date(datetime.now()) + timedelta(days=1)
             task.count_update_day = 1
             task.max_count_before_chief_notify = 14

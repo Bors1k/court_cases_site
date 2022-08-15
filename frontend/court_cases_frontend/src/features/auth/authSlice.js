@@ -7,6 +7,8 @@ export const authSlice = createSlice({
     initialState: {
         token: Cookies.get('auth-token'),
         fio: Cookies.get('fio'),
+        is_admin: Cookies.get('is_admin'),
+        is_chief: Cookies.get('is_chief'),
         error: null
     },
     reducers: {
@@ -15,7 +17,12 @@ export const authSlice = createSlice({
             state.error = null
         },
         setfio(state, action){
-            state.fio = action.payload
+            console.log(action.payload.fio)
+            state.fio = action.payload.fio
+            if(action.payload.userInfo != undefined){
+                state.is_admin = action.payload.userInfo.is_admin
+                state.is_chief = action.payload.userInfo.is_chief
+            }
         },
         signout (state) {
             state.token = null
@@ -23,6 +30,8 @@ export const authSlice = createSlice({
             state.error = null
             Cookies.remove('auth-token')
             Cookies.remove('fio')
+            Cookies.remove('is_admin')
+            Cookies.remove('is_chief')
         },
         setError(state, action) {
             state.error = action.payload
@@ -46,14 +55,16 @@ export const signinAsync = (login) => async (dispatch) => {
     })
     await axiosInstance.get('users/current-detail/').then(
         function (response){
-            dispatch(setfio(response.data.fio))
+            dispatch(setfio(response.data))
             Cookies.set('fio',response.data.fio)
+            Cookies.set('is_admin',response.data.userInfo.is_admin)
+            Cookies.set('is_chief',response.data.userInfo.is_chief)
         }
     ).catch(function(reason){
 
     })
 }
 
-export const { signin, setfio, signout, setError } = authSlice.actions
+export const { signin, setfio, signout, setError, setAttributes } = authSlice.actions
 
 export default authSlice.reducer

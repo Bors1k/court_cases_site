@@ -8,6 +8,7 @@ import DateInput from '../DateInput';
 import JSONdateManager from '../JSONdateManager'
 import TextInput from '../TextInput';
 import { updateCourt } from "../courtsSlice";
+import CourtNotifies from './CourtNotifies/CourtNotifies';
 
 function CourtForm ({court}){
 
@@ -105,9 +106,14 @@ function CourtForm ({court}){
     }
 
     return (
+        <>
+        <CourtNotifies court_id={court.id}>
+            
+        </CourtNotifies>
         <Form onSubmit={onSaveChanges}>
             <Row>
                 <Col>
+                    <hr></hr>
                     <h4 style={{'textAlign': 'center'}}>Начало дела</h4>
                 </Col>
             </Row>
@@ -122,7 +128,7 @@ function CourtForm ({court}){
             <Row>
                 <Col>
                     <hr></hr>
-                    <h4 style={{'textAlign': 'center'}}>I инстаниця</h4>
+                    <h4 style={{'textAlign': 'center'}}>I инстанция</h4>
                 </Col>
             </Row>
 
@@ -149,7 +155,7 @@ function CourtForm ({court}){
             <Row>
                 <Col>
                     <hr></hr>
-                    <h4 style={{'textAlign': 'center'}}>II инстаниця</h4>
+                    <h4 style={{'textAlign': 'center'}}>II инстанция</h4>
                 </Col>
             </Row>
 
@@ -177,7 +183,7 @@ function CourtForm ({court}){
             <Row>
                 <Col>
                     <hr></hr>
-                    <h4 style={{'textAlign': 'center'}}>III инстаниця</h4>
+                    <h4 style={{'textAlign': 'center'}}>III инстанция</h4>
                 </Col>
             </Row>
 
@@ -215,6 +221,7 @@ function CourtForm ({court}){
                 <Button type="submit">Сохранить</Button>
             </Form.Group>
         </Form>
+        </>
 );}
  
 export default CourtForm;

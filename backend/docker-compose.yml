@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  celery:
+    restart: always
+    network_mode: 'host'
+    build:
+      context: .
+    command: celery -A courts worker --loglevel=INFO
+    volumes:
+      - ./celery:/data
+
+  django:
+    build: .
+    volumes: 
+      - .:/app
+    ports:
+      - "8000:8000"
+    network_mode: 'host'
+    depends_on:
+      - celery
+    command: >
+      sh -c "python manage.py makemigrations &&
+              python manage.py migrate &&
+              python manage.py runserver 0.0.0.0:8000"

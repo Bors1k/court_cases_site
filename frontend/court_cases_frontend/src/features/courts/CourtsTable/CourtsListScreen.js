@@ -1,6 +1,7 @@
 import CourtTable from "./CourtTable";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourts, selectFilteredCourts } from "../courtsSlice";
+import {clearNotifies} from '../CourtPage/CourtNotifies/notifySlice'
 import { useEffect } from "react";
 import LoadingSpinner from '../../LoadingSpinner'
 import FormContainer from "../../FormContainer";
@@ -18,6 +19,7 @@ function CourtsListScreen (){
     const dispatch = useDispatch()
 
     useEffect(()=>{
+        dispatch(clearNotifies())
         if(courtsStatus=='idle'){
             dispatch(getCourts())
         }

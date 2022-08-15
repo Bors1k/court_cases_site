@@ -115,7 +115,7 @@ function CreateCourtForm ({user_fio}){
             <Row>
                 <Col>
                     <hr></hr>
-                    <h4 style={{'textAlign': 'center'}}>I инстаниця</h4>
+                    <h4 style={{'textAlign': 'center'}}>I инстанция</h4>
                 </Col>
             </Row>
 
@@ -142,7 +142,7 @@ function CreateCourtForm ({user_fio}){
             <Row>
                 <Col>
                     <hr></hr>
-                    <h4 style={{'textAlign': 'center'}}>II инстаниця</h4>
+                    <h4 style={{'textAlign': 'center'}}>II инстанция</h4>
                 </Col>
             </Row>
 
@@ -170,7 +170,7 @@ function CreateCourtForm ({user_fio}){
             <Row>
                 <Col>
                     <hr></hr>
-                    <h4 style={{'textAlign': 'center'}}>III инстаниця</h4>
+                    <h4 style={{'textAlign': 'center'}}>III инстанция</h4>
                 </Col>
             </Row>
 

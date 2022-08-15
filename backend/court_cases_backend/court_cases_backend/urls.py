@@ -21,7 +21,8 @@ import courts.views as views
 
 
 urlpatterns = [
-    path('notifies/<str:pk>/', views.get_notifies_for_court, name='notifies'),
+    path('notifies/', views.get_notifies, name='notifies'),
+    path('notifies/<str:pk>/', views.get_notifies_for_court, name='notifies_by_court_id'),
     path('users/',views.get_users,name='users'),
     path('users/current-detail/',views.get_current_user_info,name='user_info'),
     path('users/update-password/', views.update_password, name='update_password'),
