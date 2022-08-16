@@ -4,7 +4,6 @@ export default function NotifiesRow({notify}) {
 
     const chief_message_date = new Date(notify.date_of_notify)
     chief_message_date.setDate(chief_message_date.getDate() + (notify.max_count_before_chief_notify * notify.count_update_day - notify.notify_count * notify.count_update_day))
-    console.log(chief_message_date)
 
   return (
         <tr>

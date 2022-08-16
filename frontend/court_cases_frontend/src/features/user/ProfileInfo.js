@@ -52,7 +52,7 @@ function ProfileInfo (){
             setName(userProfile.name)
             setSurename(userProfile.surename)
             setPatronymic(userProfile.patronymic)
-            dispatch(setfio({fio: `${surename} ${name[0]}.${patronymic == undefined ? `${patronymic[0]}.`: ''}`}))
+            dispatch(setfio({fio: `${surename} ${name[0]}.${patronymic != undefined ? `${patronymic[0]}.`: ''}`}))
 
         }
         

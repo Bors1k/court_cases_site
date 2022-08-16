@@ -46,7 +46,7 @@ def check_tasks():
 def send_email_to_user(send_to, message, court_number):
     print(court_number)
     print(send_to)
-    send_mail(subject=f'Уведомление по делу №{court_number}', message=message, from_email='CourtCases@gmail.com', recipient_list=send_to ,fail_silently=False)
+    send_mail(subject=f'Уведомление по делу №{court_number}', message=message, from_email='Court-Cases@fsfk.local', recipient_list=send_to ,fail_silently=False)
 
 # @app.task
 # def send_email_to_users(send_to, message):

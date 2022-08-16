@@ -9,7 +9,7 @@ def validate_fstinst_dates_of_court_hearing(court: CourtCases):
         old_date = True
         for key in court.fstinst_dates_of_court_hearing:
             date = court.fstinst_dates_of_court_hearing[key]
-            if datetime.date(datetime.strptime(date, "%d.%m.%Y")) > datetime.date(datetime.now()):
+            if datetime.date(datetime.strptime(date, "%d.%m.%Y")) >= datetime.date(datetime.now()):
                 old_date = False
             elif datetime.date(datetime.strptime(date,"%d.%m.%Y")) < datetime.date(datetime.now()) and old_date is True:
                 notify_date = datetime.date(datetime.strptime(date, "%d.%m.%Y")) + timedelta(days=10)

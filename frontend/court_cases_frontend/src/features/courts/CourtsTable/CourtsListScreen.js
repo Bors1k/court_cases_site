@@ -26,9 +26,6 @@ function CourtsListScreen (){
         if(userToken == null || undefined){
             navigate('/login')
         }
-        if(courtError == 'Request failed with status code 403' && userToken){
-            dispatch(getCourts())
-        }
     }, [dispatch, courtsStatus, filters, courts, userToken])
 
     return (

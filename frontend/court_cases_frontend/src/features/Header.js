@@ -4,6 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Image from 'react-bootstrap/Image'
+
 
 function Header (){
   const userLogin = useSelector((state)=>state.auth)
@@ -11,13 +13,24 @@ function Header (){
   return (
     <Navbar bg="dark" variant="dark" expand="lg" style={{"marginBottom": "10px"}}>
       <Container>
-        <Navbar.Brand><Link to="/" className='Link'>Реестр юридических дел</Link></Navbar.Brand>
+        <Navbar.Brand>
+          <Link to="/" className='Link'>
+          <Image
+              alt="site logo"
+              src="/favicon.ico"
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            />{' '}
+            Реестр юридических дел
+            </Link>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse className='justify-content-end'>
           <Nav className="me-auto">
             <Nav.Link as={Link} to='/courts'>Таблица дел</Nav.Link>
             <Nav.Link as={Link} to='/courts/create-court'>Создать дело</Nav.Link>
           </Nav>
-          <Navbar.Collapse className='justify-content-end'>
             {userLogin.fio ? (
               <NavDropdown title={userLogin.fio}>
                 <NavDropdown.Item as={Link} to='/profile' style={{'textDecoration': 'none', 'color': 'black'}}>Профиль</NavDropdown.Item>

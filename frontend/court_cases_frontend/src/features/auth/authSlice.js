@@ -17,7 +17,6 @@ export const authSlice = createSlice({
             state.error = null
         },
         setfio(state, action){
-            console.log(action.payload.fio)
             state.fio = action.payload.fio
             if(action.payload.userInfo != undefined){
                 state.is_admin = action.payload.userInfo.is_admin
