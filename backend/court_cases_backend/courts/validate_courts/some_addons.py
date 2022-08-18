@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import re
 
 date_regex = re.compile(r'[0-9]{2}.[0-9]{2}\.[0-9]{4}')
+x_regex = re.compile(r'x|х')
 
 def get_task_for_validator(court, need_create: bool,column_name: str) -> NotifyTask:
     try:
@@ -23,4 +24,6 @@ def get_task_for_validator(court, need_create: bool,column_name: str) -> NotifyT
         else:
             return None
 
-
+def delete_task(task: NotifyTask):
+    if task is not None:
+        NotifyTask.objects.get(id=task.id).delete()

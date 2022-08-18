@@ -3,6 +3,10 @@ from .celery import app
 from django.core.mail import send_mail, send_mass_mail
 from .models import NotifyTask, CustomUser, CourtCases
 from .validate_courts.main_court_validator import run
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from password import *
 
 @app.task
 def check_tasks():
@@ -42,11 +46,49 @@ def check_tasks():
     return 'Tasks checked'
 
 
+# @app.task
+# def send_email_to_user(send_to, message, court_number):
+#     print(court_number)
+#     print(send_to)
+#     send_mail(subject=f'Уведомление по делу №{court_number}', message=message, from_email='Court-Cases@fsfk.local', recipient_list=send_to ,fail_silently=False)
+
 @app.task
 def send_email_to_user(send_to, message, court_number):
-    print(court_number)
-    print(send_to)
-    send_mail(subject=f'Уведомление по делу №{court_number}', message=message, from_email='Court-Cases@fsfk.local', recipient_list=send_to ,fail_silently=False)
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = f'Уведомление по делу №{court_number}'
+    msg['From'] = 'COURT-CASES@fsfk.local'
+    # msg['From'] = EMAIL_HOST_USER
+    recievers = ''
+    for reciever in send_to:
+        recievers += f'{reciever},'
+    print(recievers)
+    msg['To'] = recievers
+
+    text = 'text'
+    html = """\
+    <html>
+            <head></head>
+            <body>
+                <p><br>
+                    <h1 align="center">{}</h1>
+                    <p>{}</p>
+                </p>
+            </body>
+        </html>
+    """.format(f'Уведомление по делу №{court_number}', message)
+
+    part1 = MIMEText(text, 'plain')
+    part2 = MIMEText(html, 'html')
+
+    msg.attach(part1)
+    msg.attach(part2)
+
+    server = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
+    server.ehlo()
+    # server.starttls()
+    # server.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+    server.sendmail(EMAIL_HOST_USER, send_to, msg.as_string())
+    server.quit()
 
 # @app.task
 # def send_email_to_users(send_to, message):

@@ -1,6 +1,6 @@
 from courts.models import CourtCases, NotifyTask
 from datetime import datetime, timedelta
-from .some_addons import get_task_for_validator, date_regex
+from .some_addons import get_task_for_validator, date_regex, delete_task, x_regex
 
 
 def validate_fstinst_dates_of_court_hearing(court: CourtCases):
@@ -29,8 +29,7 @@ def validate_fstinst_dates_of_court_hearing(court: CourtCases):
             if court.fstinst_date_of_filing_in_court is not None or court.fstinst_date_of_receipt_of_judgment is not None:
                 print('delete task')
                 task = get_task_for_validator(court=court,need_create=False, column_name=column_name)
-                if task is not None:
-                    NotifyTask.objects.get(id=task.id).delete()
+                delete_task(task)
                 return True
             else:
                 print('task created')
@@ -45,8 +44,8 @@ def validate_fstinst_dates_of_court_hearing(court: CourtCases):
         
         elif old_date is False:
             task = get_task_for_validator(court=court,need_create=False, column_name=column_name)
-            if task is not None:
-                NotifyTask.objects.get(id=task.id).delete()
+            delete_task(task)
+
             return True
 
     else: 
@@ -76,7 +75,7 @@ def validate_fstinst_date_of_dicision(court: CourtCases):
         return False
 
     elif court.fstinst_date_of_dicision is not None and str(court.fstinst_brief_operative_part).lower().__contains__('взыскать с') \
-    and (court.fstinst_date_appeal_by_the_parties is None or court.fstinst_date_appeal_to_the_court is None):
+    and (court.fstinst_date_appeal_by_the_parties is None and court.fstinst_date_appeal_to_the_court is None):
         print('Создаем задачу')
         task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
         task.notify_message = f"Не заполнены графы первой инстанции 'Дата направления апелляционной жалобы сторонам по делу' или 'Дата направления апелляционной жалобы в суд' в деле №{court.number_of_court}, куратора {court.user_id}"
@@ -90,15 +89,14 @@ def validate_fstinst_date_of_dicision(court: CourtCases):
     else:
         print('try delete task')
         task = get_task_for_validator(court=court, need_create=False, column_name=column_name)
-        if task is not None:
-            NotifyTask.objects.get(id=task.id).delete()
+        delete_task(task)
 
         return True
 
 def validate_fstinst_minfin_information(court: CourtCases):
     column_name = 'fstinst_minfin_information'
     if court.fstinst_date_of_dicision is not None and str(court.fstinst_brief_operative_part).lower().__contains__('взыскать с'):
-        if str(court.fstinst_minfin_information).lower() != 'x' and date_regex.findall(str(court.fstinst_minfin_information)).__len__() == 0:
+        if x_regex.findall(str(court.fstinst_minfin_information).lower()).__len__() == 0 and date_regex.findall(str(court.fstinst_minfin_information)).__len__() == 0:
             print('Создаем задачу')
             task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
             task.notify_message = f"Не заполнена графа первой инстанции 'Информация о направлении справки по делу в ФК или Минфин' в деле №{court.number_of_court}, куратора {court.user_id}"
@@ -110,6 +108,7 @@ def validate_fstinst_minfin_information(court: CourtCases):
             return False
         else:
             task = get_task_for_validator(court=court, need_create=False, column_name=column_name)
-            if task is not None:
-                NotifyTask.objects.get(id=task.id).delete()
+            delete_task(task)
+
+            return True
      

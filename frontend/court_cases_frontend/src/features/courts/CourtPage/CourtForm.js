@@ -187,7 +187,7 @@ function CourtForm ({court}){
             </Row>
 
             <DateInput value={thrinst_date_of_judgment} setValue={setThrinst_date_of_judgment} 
-            label='Дата выынесения судебного акта  или дата рассмотрения (только дата)' />
+            label='Дата вынесения судебного акта  или дата рассмотрения (только дата)' />
             <TextInput value={thrinst_brief_operative_part} setValue={setThrinst_brief_operative_part} label='Краткая резолютивная часть судебного акта' />
             <TextInput value={thrinst_minfin_information} setValue={setThrinst_minfin_information} 
             label='Информация о направлении справки по делу в ФК или Минфин V –отправлена, дата отправления и № письма, Х – не требуется' />

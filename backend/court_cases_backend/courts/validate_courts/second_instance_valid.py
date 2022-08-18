@@ -1,6 +1,6 @@
 from courts.models import CourtCases, NotifyTask
 from datetime import datetime, timedelta
-from .some_addons import get_task_for_validator, date_regex
+from .some_addons import get_task_for_validator, date_regex, delete_task, x_regex
 
 
 def valid_fstinst_date_appeal_to_the_court(court: CourtCases):
@@ -10,7 +10,7 @@ def valid_fstinst_date_appeal_to_the_court(court: CourtCases):
     and date_regex.findall(str(court.sndinst_dates_of_court_hearing)).__len__() == 0:
         print('Создаем задачу')
         task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
-        task.notify_message = f"Не заполнена графа второй инстрации 'Даты судебных заседаний' в деле №{court.number_of_court}, куратора {court.user_id}"
+        task.notify_message = f"Не заполнена графа второй инстанции 'Даты судебных заседаний' в деле №{court.number_of_court}, куратора {court.user_id}"
         task.date_of_notify = datetime.date(datetime.now()) + timedelta(days=20)
         task.count_update_day = 5
         task.max_count_before_chief_notify = 5
@@ -31,48 +31,44 @@ def valid_fstinst_date_appeal_to_the_court(court: CourtCases):
         if old_date is True and court.sndinst_date_of_dicision is None:
             print('Создаем задачу')
             task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
-            task.notify_message = f"Не заполнена графа второй инстрации 'Дата вынесения апелляционного определения' в деле №{court.number_of_court}, куратора {court.user_id}"
+            task.notify_message = f"Не заполнена графа второй инстанции 'Дата вынесения апелляционного определения' в деле №{court.number_of_court}, куратора {court.user_id}"
             task.date_of_notify = notify_date
             task.count_update_day = 1
             task.max_count_before_chief_notify = 3
             task.save()
 
-            return False
-
         elif court.sndinst_date_of_dicision is not None:
             if str(court.sndinst_brief_operative_part) == '':
                 print('Создаем задачу')
                 task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
-                task.notify_message = f"Не заполнена графа второй инстрации 'Краткая резолютивная часть судебного акта' в деле №{court.number_of_court}, куратора {court.user_id}"
+                task.notify_message = f"Не заполнена графа второй инстанции 'Краткая резолютивная часть судебного акта' в деле №{court.number_of_court}, куратора {court.user_id}"
                 task.date_of_notify = notify_date
                 task.count_update_day = 1
                 task.max_count_before_chief_notify = 3
                 task.save()
-        
-                return False
-            elif str(court.sndinst_brief_operative_part) != '':
-                if court.sndinst_date_appeal_to_the_court is None and court.sndinst_date_appeal_by_the_parties is None:
-                    print('Создаем задачу')
-                    task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
-                    task.notify_message = f"Не заполнена графа второй инстрации 'Дата направления кассационной жалобы сторонам по делу' или 'Дата направления кассационной жалобы в суд' в деле №{court.number_of_court}, куратора {court.user_id}"
-                    task.date_of_notify = datetime.date(datetime.now()) + timedelta(days=15)
-                    task.count_update_day = 1
-                    task.max_count_before_chief_notify = 14
-                    task.save()
-                    
-                else:
-                    task = get_task_for_validator(court=court, need_create=False, column_name=column_name)
-                    if task is not None:
-                        NotifyTask.objects.get(id=task.id).delete()
+            
+            else:
+                task = get_task_for_validator(court=court, need_create=False, column_name=column_name)
+                delete_task(task)
 
-                    return True
+  
+            if court.sndinst_date_appeal_to_the_court is None and court.sndinst_date_appeal_by_the_parties is None:
+                print('Создаем задачу')
+                task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
+                task.notify_message = f"Не заполнена графа второй инстанции 'Дата направления кассационной жалобы сторонам по делу' или 'Дата направления кассационной жалобы в суд' в деле №{court.number_of_court}, куратора {court.user_id}"
+                task.date_of_notify = datetime.date(datetime.now()) + timedelta(days=15)
+                task.count_update_day = 1
+                task.max_count_before_chief_notify = 14
+                task.save()
+                    
+            else:
+                task = get_task_for_validator(court=court, need_create=False, column_name=column_name)
+                delete_task(task)
 
         else:
             task = get_task_for_validator(court=court, need_create=False, column_name=column_name)
-            if task is not None:
-                NotifyTask.objects.get(id=task.id).delete()
+            delete_task(task)
 
-            return True
 
 def valid_sndinst_date_of_dicision(court: CourtCases):
     column_name = "sndinst_date_of_dicision"
@@ -83,7 +79,7 @@ def valid_sndinst_date_of_dicision(court: CourtCases):
         and court.sndinst_date_of_receipt_of_judgment is None:
             print('task created')
             task = get_task_for_validator(court=court,need_create=True, column_name=column_name)
-            task.notify_message = f"Не заполнены графы второй инстрации 'Дата направления заявления в суд на выдачу судебных актов.' или 'Дата получения судебных актов вступивших в законную силу' в деле №{court.number_of_court}, куратора {court.user_id}"
+            task.notify_message = f"Не заполнены графы второй инстанции 'Дата направления заявления в суд на выдачу судебных актов.' или 'Дата получения судебных актов вступивших в законную силу' в деле №{court.number_of_court}, куратора {court.user_id}"
             task.date_of_notify = datetime.date(datetime.now()) + timedelta(days=10)
             task.count_update_day = 10
             task.max_count_before_chief_notify = 2
@@ -92,8 +88,7 @@ def valid_sndinst_date_of_dicision(court: CourtCases):
             return False
         else:
             task = get_task_for_validator(court=court, need_create=False, column_name=column_name)
-            if task is not None:
-                NotifyTask.objects.get(id=task.id).delete()
+            delete_task(task)
 
             return True
 
@@ -102,10 +97,10 @@ def valid_sndinst_minfin_information(court: CourtCases):
     column_name = 'sndinst_minfin_information'
     
     if court.sndinst_date_of_dicision is not None:
-        if str(court.sndinst_minfin_information).lower() != 'x' and date_regex.findall(str(court.sndinst_minfin_information)).__len__() == 0:
+        if x_regex.findall(str(court.sndinst_minfin_information).lower()).__len__() == 0 and date_regex.findall(str(court.sndinst_minfin_information)).__len__() == 0:
             print('Создаем задачу')
             task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
-            task.notify_message = f"Не заполнена графа второй инстрации 'Информация о направлении справки по делу в ФК или Минфин' в деле №{court.number_of_court}, куратора {court.user_id}"
+            task.notify_message = f"Не заполнена графа второй инстанции 'Информация о направлении справки по делу в ФК или Минфин' в деле №{court.number_of_court}, куратора {court.user_id}"
             task.date_of_notify = datetime.date(datetime.strptime(str(court.sndinst_date_of_dicision), "%Y-%m-%d")) + timedelta(days=15)
             task.count_update_day = 1
             task.max_count_before_chief_notify = 9
@@ -115,7 +110,6 @@ def valid_sndinst_minfin_information(court: CourtCases):
         
         else:
             task = get_task_for_validator(court=court, need_create=False, column_name=column_name)
-            if task is not None:
-                NotifyTask.objects.get(id=task.id).delete()
+            delete_task(task)
 
             return True
