@@ -13,7 +13,6 @@ function CreateCourtForm ({user_fio}){
 
     const dispatch = useDispatch()
 
-    const [number_of_court, setNumber_of_court] = useState('')
     const [case_source_and_summ, setCase_source_and_summ] = useState('')
     const [case_purpose, setCase_purpose] = useState('')
     const [claim, setClaim] = useState('')
@@ -56,7 +55,6 @@ function CreateCourtForm ({user_fio}){
     const onCreateCourt = (e)=>{
         e.preventDefault()
         const court_create = {
-            number_of_court,
             case_source_and_summ,
             case_purpose,
             claim,
@@ -103,8 +101,7 @@ function CreateCourtForm ({user_fio}){
                 <Col>
                     <h4 style={{'textAlign': 'center'}}>Начало дела</h4>
                 </Col>
-            </Row>
-            <TextInput type='number' value={number_of_court} setValue={setNumber_of_court} label='Номер дела'/>
+            </Row>  
             <TextInput required value={user_fio} label='Куратор' readOnly/>
             <TextInput required value={case_source_and_summ} setValue={setCase_source_and_summ} 
             label='Кем заявлены требования и (сумма заявленных требований):' />
@@ -165,7 +162,7 @@ function CreateCourtForm ({user_fio}){
             <DateInput value={sndinst_date_appeal_by_the_parties} setValue={setSndinst_date_appeal_by_the_parties} 
             label='Дата направления кассационной жалобы (Х - не требуется) сторонами по делу' />
             <DateInput value={sndinst_date_appeal_to_the_court} setValue={setSndinst_date_appeal_to_the_court} 
-            label='ата направления кассационной жалобы (Х - не требуется) в суд' />
+            label='Дата направления кассационной жалобы (Х - не требуется) в суд' />
 
             <Row>
                 <Col>

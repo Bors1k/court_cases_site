@@ -29,13 +29,13 @@ def check_tasks():
                 for _user in CustomUser.objects.filter(is_chief=True):
                     send_to_emails.append(_user.email)
                 
-                send_email_to_user(send_to_emails, item.notify_message,item.court_id.number_of_court)
+                send_email_to_user(send_to_emails, item.notify_message,item.court_id.id)
             else:
                 print('Кол-во уведомлений < необходимого для уведомления начальников')
                 court_case = CourtCases.objects.get(id=item.court_id.id)
                 user = CustomUser.objects.get(id=court_case.user_id.id)
                 
-                send_email_to_user([user.email], item.notify_message,item.court_id.number_of_court)
+                send_email_to_user([user.email], item.notify_message,item.court_id.id)
             
             item.notify_count += 1
             item.date_of_notify = datetime.date(datetime.now()) + timedelta(days=item.count_update_day)

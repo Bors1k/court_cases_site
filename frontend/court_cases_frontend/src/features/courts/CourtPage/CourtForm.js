@@ -14,7 +14,7 @@ function CourtForm ({court}){
 
     const dispatch = useDispatch()
 
-    const [number_of_court, setNumber_of_court] = useState(court.number_of_court)
+    // const [number_of_court, setNumber_of_court] = useState(court.id)
     const [case_source_and_summ, setCase_source_and_summ] = useState(court.case_source_and_summ)
     const [case_purpose, setCase_purpose] = useState(court.case_purpose)
     const [claim, setClaim] = useState(court.claim)
@@ -64,7 +64,6 @@ function CourtForm ({court}){
         e.preventDefault()
         const court_update = {
             id: court.id,
-            number_of_court,
             case_source_and_summ,
             case_purpose,
             claim,
@@ -113,10 +112,10 @@ function CourtForm ({court}){
         <Form onSubmit={onSaveChanges}>
             <Row>
                 <Col>
-                    <h4 style={{'textAlign': 'center'}}>Начало дела</h4>
+                    <h4 style={{'textAlign': 'center'}}>Начало дела №{court.id}</h4>
                 </Col>
             </Row>
-            <TextInput required type='number' value={number_of_court} setValue={setNumber_of_court} label='Номер дела' />
+            {/* <TextInput required type='number' value={number_of_court} setValue={setNumber_of_court} label='Номер дела' /> */}
             <TextInput required value={court.user_name} label='Куратор' readOnly/>
             <TextInput required value={case_source_and_summ} setValue={setCase_source_and_summ} 
             label='Кем заявлены требования и (сумма заявленных требований):' />
@@ -143,7 +142,7 @@ function CourtForm ({court}){
             <TextInput value={fstinst_minfin_information} setValue={setFstinst_minfin_information} 
             label='Информация о направлении справки по делу в ФК или Минфин V –отправлена, дата отправления и № письма, X – не требуется' />
             <DateInput value={fstinst_date_of_filing_in_court} setValue={setFstinst_date_of_filing_in_court} 
-            label='Дата направления заявления в суд на выдачу судебного акта.' />
+            label='Дата направления заявления в суд на выдачу судебного акта' />
             <DateInput value={fstinst_date_of_receipt_of_judgment} setValue={setFstinst_date_of_receipt_of_judgment} 
             label='Дата получения судебного решения' />
             <DateInput value={fstinst_date_appeal_by_the_parties} setValue={setFstinst_date_appeal_by_the_parties} 
@@ -177,7 +176,7 @@ function CourtForm ({court}){
             <DateInput value={sndinst_date_appeal_by_the_parties} setValue={setSndinst_date_appeal_by_the_parties} 
             label='Дата направления кассационной жалобы (Х - не требуется) сторонами по делу' />
             <DateInput value={sndinst_date_appeal_to_the_court} setValue={setSndinst_date_appeal_to_the_court} 
-            label='ата направления кассационной жалобы (Х - не требуется) в суд' />
+            label='Дата направления кассационной жалобы (Х - не требуется) в суд' />
 
             <Row>
                 <Col>
@@ -192,9 +191,9 @@ function CourtForm ({court}){
             <TextInput value={thrinst_minfin_information} setValue={setThrinst_minfin_information} 
             label='Информация о направлении справки по делу в ФК или Минфин V –отправлена, дата отправления и № письма, Х – не требуется' />
             <DateInput value={thrinst_date_of_application_court_acts} setValue={setThrinst_date_of_application_court_acts} 
-            label='Дата направления заявления в суд на выдачу судебных актов.' />
+            label='Дата направления заявления в суд на выдачу судебных актов' />
             <DateInput value={thrinst_date_of_receipt_acts} setValue={setThrinst_date_of_receipt_acts} 
-            label='Дата получения судебных актов.' />
+            label='Дата получения судебных актов' />
             
             
             <Row>

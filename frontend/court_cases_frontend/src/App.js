@@ -13,6 +13,8 @@ import CourtScreen from './features/courts/CourtPage/CourtScreen';
 import CreateCourtScreen from './features/courts/CreateCourtPage/CreateCourtScreen';
 import {clearCourtState} from './features/courts/courtsSlice'
 import { Redirect } from 'react-router-dom';
+import Footer from './features/Footer'
+
 
 function App() {
   let location = useLocation();
@@ -31,7 +33,7 @@ function App() {
 
   
     return (
-      <div className="App">
+      <div className="App d-flex flex-column min-vh-100">
         <Header></Header>
         <Routes>
           <Route path="/" element={<HomeScreen/>}/>
@@ -42,6 +44,7 @@ function App() {
           <Route path="/courts/create-court" element={<PrivateRoute><CreateCourtScreen/></PrivateRoute>}/>
           <Route path='/logout' element={<PrivateRoute><Navigate to={'/login'}/></PrivateRoute>}></Route>
         </Routes>
+        <Footer></Footer>
       </div>
     );
 }

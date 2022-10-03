@@ -68,9 +68,9 @@ def get_courts(request):
         queryset = CourtCases.objects.filter(user_id=user.id)
 
     if ordering is not None and ordering == 'reverse':
-        queryset = queryset.order_by('number_of_court').reverse()
+        queryset = queryset.order_by('id').reverse()
     else:
-        queryset = queryset.order_by('number_of_court')
+        queryset = queryset.order_by('id')
         
     serializer_class = CourtCasesSerializer(queryset, many=True)
 

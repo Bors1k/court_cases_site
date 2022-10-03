@@ -8,7 +8,7 @@ def valid_thrinst_date_of_judgment(court: CourtCases):
         if court.thrinst_date_of_judgment < datetime.date(datetime.now()):
             print('Создаем задачу')
             task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
-            task.notify_message = f"Не заполнена графа третьей инстанции 'Краткая резолютивная часть судебного акта' в деле №{court.number_of_court}, куратора {court.user_id}"
+            task.notify_message = f"Не заполнена графа третьей инстанции 'Краткая резолютивная часть судебного акта' в деле №{court.id}, куратора {court.user_id}"
             task.date_of_notify = court.thrinst_date_of_judgment + timedelta(days=10)
             task.count_update_day = 1
             task.max_count_before_chief_notify = 14
@@ -16,7 +16,7 @@ def valid_thrinst_date_of_judgment(court: CourtCases):
 
         else:
             task = get_task_for_validator(court=court,need_create=False, column_name=column_name)
-            task.notify_message = f"Не заполнена графа третьей инстанции 'Краткая резолютивная часть судебного акта' в деле №{court.number_of_court}, куратора {court.user_id}"
+            task.notify_message = f"Не заполнена графа третьей инстанции 'Краткая резолютивная часть судебного акта' в деле №{court.id}, куратора {court.user_id}"
             task.date_of_notify = datetime.date(datetime.now()) + timedelta(days=20)
             task.count_update_day = 5
             task.max_count_before_chief_notify = 3
@@ -35,7 +35,7 @@ def valid_thrinst_minfin_information(court: CourtCases):
         if x_regex.findall(str(court.thrinst_minfin_information).lower()).__len__() == 0 and date_regex.findall(str(court.thrinst_minfin_information)).__len__() == 0:
             print('Создаем задачу')
             task = get_task_for_validator(court=court, need_create=True, column_name=column_name)
-            task.notify_message = f"Не заполнена графа третьей инстанции 'Информация о направлении справки по делу в ФК или Минфин' в деле №{court.number_of_court}, куратора {court.user_id}"
+            task.notify_message = f"Не заполнена графа третьей инстанции 'Информация о направлении справки по делу в ФК или Минфин' в деле №{court.id}, куратора {court.user_id}"
             task.date_of_notify = court.thrinst_date_of_judgment + timedelta(days=15)
             task.count_update_day = 1
             task.max_count_before_chief_notify = 9

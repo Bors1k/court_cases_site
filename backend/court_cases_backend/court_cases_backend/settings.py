@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import password
+import password as password
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -161,10 +161,3 @@ AUTH_USER_MODEL = 'courts.CustomUser'
 # Должно помогать в изменение формата даты при вводе пользователем, но оно игнорируется, 
 # что просто, что если использовать в сериализаторе
 DATE_INPUT_FORMATS = ['%d.%m.%Y'] # бесполезная фигня, я не понимаю почему, но это не работает
-
-
-EMAIL_HOST = password.EMAIL_HOST
-EMAIL_USE_TLS = password.EMAIL_USE_TLS
-EMAIL_PORT = password.EMAIL_PORT
-EMAIL_HOST_USER = password.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = password.EMAIL_HOST_PASSWORD

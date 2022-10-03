@@ -10,7 +10,7 @@ from .models import CourtCases, CustomUser, NotifyTask # CourtFirstInstance, Cou
 
 class CourtCasesAdmin(admin.ModelAdmin):
     fieldsets = (
-        ('Начало дела', {'fields': ('user_id', 'number_of_court', 'case_source_and_summ', 
+        ('Начало дела', {'fields': ('user_id', 'case_source_and_summ', 
         'claim', 'number_case_in_first_instance', 'number_case_in_numenklature')}),
         ('Первая инстанция', {'fields': ('fstinst_dates_of_court_hearing', 'fstinst_date_of_dicision', 
         'fstinst_brief_operative_part', 'fstinst_minfin_information', 'fstinst_date_of_filing_in_court',

@@ -18,3 +18,11 @@ body {
   margin: auto;
   align-self: center;
 }
+
+footer {
+  color: #adb5bd;
+  background-color: #e9ecef;
+  text-align: center;
+  margin-top: auto;
+  padding: 8px;
+}

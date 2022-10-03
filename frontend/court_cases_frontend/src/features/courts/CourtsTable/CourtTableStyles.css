@@ -1,0 +1,15 @@
+.tableheader {
+    min-width: 125px;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.tablerow {
+    min-width: 125px;
+    font-weight: normal;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+}

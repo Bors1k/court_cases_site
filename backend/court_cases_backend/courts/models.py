@@ -1,5 +1,3 @@
-from ensurepip import version
-from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
@@ -101,9 +99,9 @@ class CourtCases(models.Model):
         verbose_name = 'Судебное дело'
         verbose_name_plural = 'Судебные дела'
 
-
+    
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Куратор')
-    number_of_court = models.FloatField(verbose_name='Номер дела', unique=True)
+    # number_of_court = models.FloatField(verbose_name='Номер дела', unique=True)
     case_source_and_summ = models.CharField(max_length=255, verbose_name='Кем заявлены требования и (сумма заявленных требований)')
     case_purpose = models.CharField(max_length=255, verbose_name='К кому заявлены требования + (3 лицо)')
     claim = models.CharField(max_length=255, verbose_name='Исковые требования')
@@ -149,7 +147,7 @@ class CourtCases(models.Model):
     summary_of_court =  models.CharField(max_length=255, blank=True, verbose_name='ИТОГ по делу')
         
     def __str__(self):
-        return f'{self.number_of_court} | {self.user_id}' 
+        return f'{self.id} | {self.user_id}' 
 
 class NotifyTask(models.Model):
     class Meta:
@@ -164,4 +162,4 @@ class NotifyTask(models.Model):
     count_update_day = models.IntegerField(verbose_name='Обновить дату на ...дней')
 
     def __str__(self) -> str:
-        return f'Дело - {self.court_id.number_of_court} | Сообщение - {self.notify_message[:60]}...'
+        return f'Дело - {self.court_id.id} | Сообщение - {self.notify_message[:60]}...'
