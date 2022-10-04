@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
 import axiosInstance from '../services/axios/index'
+import { changeItemsCount } from './filterSlice'
 
 
 export const courtsSlice = createSlice({
@@ -14,7 +15,7 @@ export const courtsSlice = createSlice({
             state.courts = []
             state.status = 'idle'
             state.err = null
-        } 
+        }
     },
     extraReducers(builder){
         builder.addCase(getCourts.pending, (state, actions)=>{
@@ -83,21 +84,31 @@ export const createCourt = createAsyncThunk('courts/create', async (court)=>{
 
 export const selectCourts = (state) => state.courts.courts
 
+export const selectCourtsLength = (state) => selectFilteredCourts(state).length
+
 export const selectFilteredCourts = createSelector(
     selectCourts,
-    (state)=>state.filter.filters,
-    (courts, filters)=>{
-        if (filters == null || filters==''){
+    (state)=>state.filter,
+    (courts, filter)=>{
+        if (filter.filters == null || filter.filters==''){
             return courts
         }
         return courts.filter((court)=>{
             for (const key in court) {
-                if(`${court[key]}`.toLowerCase().includes(`${filters}`.toLowerCase())){
+                if(`${court[key]}`.toLowerCase().includes(`${filter.filters}`.toLowerCase())){
                     return true
                 }
             }
             return false
         })
+    }
+)
+
+export const selectPaginatedCourts = createSelector(
+    selectFilteredCourts,
+    (state)=>state.filter,
+    (courts, filter)=>{
+        return courts.slice((filter.current_page-1)*filter.items_per_page, filter.current_page * filter.items_per_page)
     }
 )
 

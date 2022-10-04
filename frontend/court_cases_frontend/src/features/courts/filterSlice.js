@@ -1,14 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    // user_name: null,
-    // number_of_court: null, 
-    // case_source_and_summ: null,
-    // case_purpose: null, 
-    // claim: null,
-    // number_case_in_first_instance: null,
-    // number_case_in_numenklature: null
     filters: '',
+    current_page: 1,
+    items_per_page: 25,
+    items_count: 0
 }
 
 const filterSlice = createSlice({
@@ -17,19 +13,18 @@ const filterSlice = createSlice({
   reducers: {
     filtersChanged(state, actions){
         state.filters = actions.payload
-        // state.user_name = actions.payload.user_name
-        // state.number_of_court = actions.payload.number_of_court
-        // state.case_source_and_summ = actions.payload.case_source_and_summ
-        // state.case_purpose = actions.payload.case_purpose
-        // state.claim = actions.payload.claim
-        // state.number_case_in_first_instance = actions.payload.number_case_in_first_instance
-        // state.number_case_in_numenklature = actions.number_case_in_numenklature
+    },
+    pageChanged(state, actions){
+      state.current_page = actions.payload
+    },
+    changeItemsCount(state, actions){
+      state.items_count = actions.payload
     }
   }
 });
 
 
 
-export const {filtersChanged} = filterSlice.actions
+export const {filtersChanged, pageChanged, changeItemsCount} = filterSlice.actions
 
 export default filterSlice.reducer

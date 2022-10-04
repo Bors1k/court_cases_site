@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import { useDispatch } from 'react-redux';
-import {filtersChanged} from '../filterSlice'
+import {filtersChanged, pageChanged} from '../filterSlice'
 import Button from 'react-bootstrap/Button';
 import { Row, Col } from 'react-bootstrap';
 
@@ -12,6 +12,7 @@ export default function CourtTableFilters({filters}) {
   const onSearch = (e)=>{
     e.preventDefault()
     dispatch(filtersChanged(filter))
+    dispatch(pageChanged(1))
   }
   return (
     <Form onSubmit={onSearch}>

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import './CourtTableStyles.css'
 
 function CourtTable ({courts}){
-    const [ordering, setOrdering] = useState(false)
+    const [ordering, setOrdering] = useState(true)
 
     const courtsStatus = useSelector(store=>store.courts.status)
 

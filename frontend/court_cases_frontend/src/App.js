@@ -14,6 +14,7 @@ import CreateCourtScreen from './features/courts/CreateCourtPage/CreateCourtScre
 import {clearCourtState} from './features/courts/courtsSlice'
 import { Redirect } from 'react-router-dom';
 import Footer from './features/Footer'
+import WhatsNew from './features/WhatsNew';
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           <Route path="/courts/:court_id" element={<PrivateRoute><CourtScreen/></PrivateRoute>}/>
           <Route path="/courts/create-court" element={<PrivateRoute><CreateCourtScreen/></PrivateRoute>}/>
           <Route path='/logout' element={<PrivateRoute><Navigate to={'/login'}/></PrivateRoute>}></Route>
+          <Route path="/whats-new" element={<WhatsNew/>}/>
         </Routes>
         <Footer></Footer>
       </div>

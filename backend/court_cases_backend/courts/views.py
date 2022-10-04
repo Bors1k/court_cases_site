@@ -67,7 +67,7 @@ def get_courts(request):
     else:
         queryset = CourtCases.objects.filter(user_id=user.id)
 
-    if ordering is not None and ordering == 'reverse':
+    if ordering == 'reverse':
         queryset = queryset.order_by('id').reverse()
     else:
         queryset = queryset.order_by('id')

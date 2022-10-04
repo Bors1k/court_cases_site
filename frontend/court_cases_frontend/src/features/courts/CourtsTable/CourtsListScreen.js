@@ -1,16 +1,18 @@
 import CourtTable from "./CourtTable";
 import { useDispatch, useSelector } from "react-redux";
-import { getCourts, selectFilteredCourts } from "../courtsSlice";
+import { getCourts, selectCourtsLength, selectFilteredCourts, selectPaginatedCourts } from "../courtsSlice";
 import {clearNotifies} from '../CourtPage/CourtNotifies/notifySlice'
 import { useEffect } from "react";
 import LoadingSpinner from '../../LoadingSpinner'
 import FormContainer from "../../FormContainer";
 import CourtTableFilters from "./CourtTableFilters";
 import { useNavigate } from "react-router-dom";
+import Paginations from "./Paginations";
 
 function CourtsListScreen (){
 
-    const courts = useSelector(selectFilteredCourts)
+    const courts_lenght = useSelector(selectCourtsLength)
+    const courts = useSelector(selectPaginatedCourts)
     const courtsStatus = useSelector(store=>store.courts.status)
     const courtError = useSelector(store=>store.courts.err)
     const filters = useSelector(store=>store.filter.filters)
@@ -32,6 +34,7 @@ function CourtsListScreen (){
         <FormContainer>
             <CourtTableFilters filters={filters}></CourtTableFilters>
             {courtsStatus == 'loading' || courtsStatus == 'idle' ? <LoadingSpinner></LoadingSpinner> : <CourtTable courts={courts}/>}
+            <Paginations courts_lenght={courts_lenght}></Paginations>
         </FormContainer>
     );
     }

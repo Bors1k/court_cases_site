@@ -10,7 +10,7 @@ import Image from 'react-bootstrap/Image'
 function Footer (){
 
   return (<footer className='mt-auto'>
-    v 1.0.1
+    <Link to={'/whats-new'}>Реестр юридических дел v 1.0.2</Link> <span> © ОИС 2021 - {new Date().getFullYear()}</span>
   </footer>);
 }
  
