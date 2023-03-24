@@ -3,7 +3,7 @@ version: '3'
 services:
   celery:
     restart: always
-    network_mode: 'host'
+    network_mode: host
     build:
       context: .
     command: sh -c "celery -A courts worker --loglevel=INFO"
@@ -12,7 +12,7 @@ services:
 
   celery-beat:
     restart: always
-    network_mode: 'host'
+    network_mode: host
     build:
       context: .
     command: sh -c "celery -A courts beat"
@@ -28,10 +28,11 @@ services:
       - .:/app
     ports:
       - "8080:8080"
-    network_mode: 'host'
+    # network_mode: host
     depends_on:
       - celery
     command: >
-      sh -c "python manage.py makemigrations &&
+      sh -c "python manage.py makemigrations courts &&
+              python manage.py makemigrations &&
               python manage.py migrate &&
               python manage.py runserver 0.0.0.0:8080"

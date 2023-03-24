@@ -23,8 +23,6 @@ const filterSlice = createSlice({
   }
 });
 
-
-
 export const {filtersChanged, pageChanged, changeItemsCount} = filterSlice.actions
 
 export default filterSlice.reducer

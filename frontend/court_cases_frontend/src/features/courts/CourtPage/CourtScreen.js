@@ -7,6 +7,7 @@ import FormContainer from "../../FormContainer";
 import { useNavigate, useParams } from "react-router-dom";
 import CourtForm from "./CourtForm";
 import AlertMessage from '../../AlertMessage'
+import {clearNotifies} from '../CourtPage/CourtNotifies/notifySlice'
 
 function CourtScreen (){
 
@@ -19,6 +20,7 @@ function CourtScreen (){
     const dispatch = useDispatch()
 
     useEffect(()=>{
+        dispatch(clearNotifies())
         if(courtsStatus=='idle'){
             dispatch(getCourts())
         }

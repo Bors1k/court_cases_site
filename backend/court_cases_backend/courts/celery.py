@@ -4,7 +4,9 @@ from celery.schedules import crontab
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'court_cases_backend.settings')
 
-app = Celery('tasks', broker='redis://localhost')
+# start in docker container
+app = Celery('tasks', broker='redis://host.docker.internal:6379')
+
 # app = Celery('tasks', broker='redis://redis')
 
 app.autodiscover_tasks()

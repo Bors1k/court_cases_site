@@ -21,7 +21,7 @@ function CourtsListScreen (){
     const dispatch = useDispatch()
 
     useEffect(()=>{
-        dispatch(clearNotifies())
+        // dispatch(clearNotifies())
         if(courtsStatus=='idle'){
             dispatch(getCourts())
         }
