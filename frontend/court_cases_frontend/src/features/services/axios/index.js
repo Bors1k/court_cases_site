@@ -2,8 +2,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-  // baseURL: "http://host.docker.internal:8080/",
-  baseURL: "http://192.168.2.47:8080/",
+  baseURL: "http://host.docker.internal:8080/",
+  // baseURL: "http://192.168.2.47:8080/",
 });
 
 axiosInstance.interceptors.request.use(

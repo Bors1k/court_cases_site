@@ -83,18 +83,13 @@ def send_email_to_user(send_to, message, court_number):
     msg.attach(part1)
     msg.attach(part2)
 
-    server = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
+    server = smtplib.SMTP_SSL(EMAIL_HOST, EMAIL_PORT)
+    # server = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
     server.ehlo()
     # server.starttls()
-    # server.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+    server.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
     server.sendmail(EMAIL_HOST_USER, send_to, msg.as_string())
     server.quit()
-
-# @app.task
-# def send_email_to_users(send_to, message):
-#     print(send_to)
-#     send_mass_mail(subject='Уведомление по делу', message=message, from_email='CourtCases@gmail.com', recipient_list=send_to ,fail_silently=False)
-
 
 @app.task
 def create_task(court_id):
